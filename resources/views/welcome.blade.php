@@ -6,9 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Főoldal') }}</div>
-
                 <div class="card-body">
+                    @guest
                     <h5 class="card-title">Bejelentkezés szükséges</h5>
+                    @else
                     <div class="card-body">
                         <div class="card" style="width: 15rem; display: inline-block">
                             <div class="card-body">
@@ -29,6 +30,7 @@
                             </div>    
                         </div>
                     </div>
+                    @endguest
                 </div>
             </div>
         </div>

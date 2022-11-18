@@ -7,6 +7,9 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Traits\HasRoles;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +23,21 @@ use App\Http\Controllers\RoleController;
 */
 
 Route::get('/', function () {
+   /*
+$roles = Role::all();
+
+foreach ($roles as $key => $value) {
+    echo "<strong>";
+    echo $value->name;
+    echo ":</strong> ";
+    foreach ($value->permissions as $key => $item) {
+        echo $item->name;
+        echo ", ";
+    }
+    echo "<br>";
+}
+return;
+*/
     return view('welcome');
 });
 
