@@ -45,9 +45,17 @@
               @endif
             </td>
             <td>
-              <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-              <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-              
+              <div class="btn-group">
+              <a class="btn btn-info" href="{{ route('users.show',$user) }}">Show</a>
+              <a class="btn btn-primary" href="{{ route('users.edit',$user) }}">Edit</a>
+              @can('user-delete')
+                <form action="{{route('users.destroy',$user->id)}}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button class="btn btn-danger" type="submit">Delete</button>               
+                </form>
+              @endcan
+              </div>
             </td>
           </tr>
         @endforeach

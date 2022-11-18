@@ -54,12 +54,12 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('login') }}">{{ __('Belépés') }}</a></li>
+                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Regisztráció') }}</a></li>
                         @else
-                            <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
-                            <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
-                            <li><a class="nav-link" href="{{ route('items.index') }}">Manage Product</a></li>
+                            <li><a class="nav-link" href="{{ route('users.index') }}">Felhasználók</a></li>
+                            <li><a class="nav-link" href="{{ route('roles.index') }}">Jogosultságok</a></li>
+                            <li><a class="nav-link" href="{{ route('items.index') }}">Tételek</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -69,7 +69,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Kijelentkezés') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

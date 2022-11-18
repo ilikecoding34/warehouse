@@ -66,9 +66,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::find($id)->with('roles')->first();
+        $user->with('roles')->first();
         return view('users.show',compact('user'));
     }
     
@@ -78,9 +78,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
         $roles = Role::all();
         $userRole = $user->roles->pluck('id')->toArray();
 
