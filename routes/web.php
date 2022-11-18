@@ -5,6 +5,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\QrCodeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,22 +25,27 @@ Route::get('/', function () {
 
 Route::get('/qrcode', [QrCodeController::class, 'index']);
 
-Route::resource('items', ItemController::class);
-Route::resource('pictures', PictureController::class);
-Route::resource('types', TypeController::class);
+Auth::routes();
 
-//Egyedi útvonalak
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('items', ItemController::class);
+    Route::resource('pictures', PictureController::class);
+    Route::resource('types', TypeController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+        
+    //Egyedi útvonalak
 
-Route::get('/pictures/{id}/modal', [PictureController::class, 'modal'])->name('pictures.modal');
+    Route::get('/pictures/{id}/modal', [PictureController::class, 'modal'])->name('pictures.modal');
 
-Route::get('/pictures/restore/{id}', [PictureController::class, 'restore'])->name('pictures.restore');
+    Route::get('/pictures/restore/{id}', [PictureController::class, 'restore'])->name('pictures.restore');
 
-Route::post('/additemtype/{item}', [ItemController::class, 'addtype'])->name('items.addtype');
+    Route::post('/additemtype/{item}', [ItemController::class, 'addtype'])->name('items.addtype');
 
-Route::get('/items/{id}/modal', [ItemController::class, 'modal'])->name('items.modal');
+    Route::get('/items/{id}/modal', [ItemController::class, 'modal'])->name('items.modal');
 
-Route::get('/items/restore/{id}', [ItemController::class, 'restore'])->name('items.restore');
+    Route::get('/items/restore/{id}', [ItemController::class, 'restore'])->name('items.restore');
 
-//Auth::routes();
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

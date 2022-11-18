@@ -73,13 +73,18 @@
                 <div style="width: 600px; margin: auto;">
                     <canvas id="myChart"></canvas>
                 </div>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Változások összesen: {{count($item->quantity)}}
+                </button>
+                <div class="collapse" id="collapseExample">
+                    <div>
+                        @foreach ($item->quantity as $quantity)
+                            Jelenlegi mennyiség: {{$quantity->value}} - {{$quantity->created_at}}
+                            <br>
+                        @endforeach
+                    </div>
+                </div>
             </div>
-            Változások összesen: {{count($item->quantity)}}
-            <br>
-            @foreach ($item->quantity as $quantity)
-                    {{$quantity->value}} - {{$quantity->created_at}}
-                    <br>
-            @endforeach
         </div>
     </div>
 </div>
