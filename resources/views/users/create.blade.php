@@ -8,11 +8,13 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Create New User</h2>
-                    </div>
-                    <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <h2>{{ __('Felhasználó létrehozás') }}</h2>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary" href="{{ route('users.index') }}"> Vissza</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,7 +36,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name:</strong>
+                        <strong>Név:</strong>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                     </div>
                 </div>
@@ -46,19 +48,19 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Password:</strong>
+                        <strong>Jelszó:</strong>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Jelszó">
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Confirm Password:</strong>
+                        <strong>Jelszó újra:</strong>
                         <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Jelsó újra">
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Role:</strong>
+                        <strong>Jogosultság:</strong>
                         <select class="form-control" style="border: 1px solid" id="roles" name="roles[]" multiple>
                             <option value=""></option>
                             @foreach ($roles as $item)
@@ -70,7 +72,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Küldés</button>
                 </div>
             </div>
             </form>

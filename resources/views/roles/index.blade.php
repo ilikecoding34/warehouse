@@ -7,16 +7,18 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Role Management</h2>
-                    </div>
-                    <div class="pull-right">
-                    @can('role-create')
-                        <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <h2>{{ __('Jogosultságok kezelése') }}</h2>
+                        </div>
+                        @can('role-create')
+                            <div>
+                                <a class="btn btn-success" href="{{ route('roles.create') }}"> Új jogosultság létrehozása</a>
+                            </div>
                         @endcan
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
             @if ($message = Session::get('success'))
@@ -29,8 +31,8 @@
             <table class="table table-bordered">
             <tr>
                 <th>No</th>
-                <th>Name</th>
-                <th width="280px">Action</th>
+                <th>Megnevezés</th>
+                <th width="280px">Művelet</th>
             </tr>
                 @foreach ($roles as $key => $role)
                 <tr>
@@ -38,15 +40,15 @@
                     <td>{{ $role->name }}</td>
                     <td>
                         <div class="btn-group">
-                        <a class="btn btn-info" href="{{ route('roles.show',$role) }}">Show</a>
+                        <a class="btn btn-info" href="{{ route('roles.show',$role) }}">Megtekint</a>
                         @can('role-edit')
-                            <a class="btn btn-primary" href="{{ route('roles.edit',$role) }}">Edit</a>
+                            <a class="btn btn-primary" href="{{ route('roles.edit',$role) }}">Szerkeszt</a>
                         @endcan
                         @can('role-delete')
                             <form action="{{route('roles.destroy',$role->id)}}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button class="btn btn-danger" type="submit">Delete</button>               
+                                <button class="btn btn-danger" type="submit">Töröl</button>               
                             </form>
                         @endcan
                         </div>

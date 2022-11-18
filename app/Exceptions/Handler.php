@@ -37,5 +37,9 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+            abort(403, 'Nincs megfelelő jogosultság beállítva');
+        });
     }
 }
