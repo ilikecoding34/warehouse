@@ -18,9 +18,9 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        
+
         // create permissions
-        /*
+
         Permission::create(['name' => 'item-list']);
         Permission::create(['name' => 'item-create']);
         Permission::create(['name' => 'item-edit']);
@@ -41,13 +41,13 @@ class RolesAndPermissionsSeeder extends Seeder
         // create roles and assign created permissions
 
         // this can be done as separate statements
-        $role = Role::where('name', 'user-handler');
+        $role = Role::create(['name' => 'user-handler']);
 
         $permissions = [
-            'user-list', 
-            'user-create', 
-            'user-edit', 
-            'user-delete', 
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
             'role-list',
             'role-create',
             'role-edit',
@@ -55,7 +55,7 @@ class RolesAndPermissionsSeeder extends Seeder
         ];
 
         $role->syncPermissions($permissions);
-        */
+
 
         $role = Role::create(['name' => 'item-handler']);
         $role->givePermissionTo(['item-list', 'item-create', 'item-edit', 'item-delete']);
@@ -68,6 +68,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());
-        
+
     }
 }
