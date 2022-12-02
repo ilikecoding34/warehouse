@@ -33,6 +33,7 @@
                     </div>
                     @endguest
                 </div>
+                @livewire('data-tables')
             </div>
         </div>
     </div>

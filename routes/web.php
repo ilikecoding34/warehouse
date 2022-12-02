@@ -10,6 +10,7 @@ use App\Http\Controllers\RoleController;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Item;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,16 @@ return;
 */
     return view('welcome');
 });
-
+/*
+Route::get('/faker', function () {
+    
+    $items = Item::factory()->count(100)->make();
+    foreach ($items as $key => $value) {
+        $value->save();
+    }
+     return;
+ });
+*/
 Route::get('/qrcode', [QrCodeController::class, 'index']);
 
 Auth::routes();
