@@ -8,12 +8,12 @@
             <div class="card-header">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        {{ __('Piktogrammok') }}
+                        {{ __('Tipusok') }}
                     </div>
                     <div>
                         <a href="{{ route('types.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
                     </div>
-                </div>    
+                </div>
             </div>
                 <div class="card-body">
 		<div id="content">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <br>
-           
+
             <div class="field">
                 <div class="control">
                     <button type="submit" class="btn btn-success">Frissítés</button>

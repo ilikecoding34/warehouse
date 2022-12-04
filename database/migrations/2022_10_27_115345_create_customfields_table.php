@@ -16,6 +16,7 @@ class CreateCustomfieldsTable extends Migration
         Schema::create('customfields', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->softDeletes();
             $table->timestamps();
 
         });

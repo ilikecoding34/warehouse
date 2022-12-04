@@ -62,8 +62,8 @@
 </div>
 </div>
 </div>
-@if (isset($types))
-    @foreach ($types as $item)
+@if (isset($customfields))
+    @foreach ($customfields as $item)
         <div class="modal" id="delete_modal_{{$item->id}}">
             <div class="modal-dialog">
                 <form id="companydata" method="POST" action="{{route('customfields.destroy', $item) }}" >

@@ -8,7 +8,7 @@
             <div class="card-header">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        {{ __('Piktogrammok') }}
+                        {{ __('Tipusok') }}
                     </div>
                     <div>
                         <a href="{{ route('types.edit', $type ) }}"><button class="btn btn-primary" type="submit">Szerkesztés</button></a>
@@ -18,14 +18,14 @@
             </div>
             <div class="card-body">
 		    <div id="content">
-            
+
             <br>
 			<div class="field">
                 {{ $type->name }}
             </div>
             <br>
-            
-            
+
+
         </div>
 
     </div>
