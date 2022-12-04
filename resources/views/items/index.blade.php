@@ -8,12 +8,12 @@
                 <div class="card-header">{{ __('Sok sok bejegyzés listázva') }}</div>
 
                 <div class="card-body">
-                    
+
                     <a href="{{route('items.create')}}"><button class="btn btn-primary">Új létrehozás</button></a>
                     <hr>
                     <div>
-                        Items: {{count($items)}}, 
-                        Total quantity: {{$totalquantity}}, 
+                        Items: {{count($items)}},
+                        Total quantity: {{$totalquantity}},
                         Total value: {{$totalvalue}}
                     </div>
                     <hr>
@@ -66,7 +66,7 @@
                         </td>
                     </tr>
                     @endforeach
-                    
+
                 </div>
                 @if ($trashed->count() > 0)
                 <br>
@@ -108,18 +108,18 @@
             <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">Elem törlése</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <form id="companydata" method="POST" action="{{route('items.destroy', $item) }}" >
+            <form id="companydata" method="POST" action="" >
             </div>
             <div class="modal-body">
-                
+
                     @method('DELETE')
                     @csrf
                     <input id="id" name="id" hidden value="">
                     <div class="modal-content">
                         <h5 class="text-center">Biztos törölni szeretné <span id="itemname"></span> <span id="name"></span> elemet?</h5>
-                        
+
                     </div>
-                
+
             </div>
             <div class="modal-footer justify-content-between">
                 <button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
@@ -139,7 +139,7 @@
                 let vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "ö", "ő", "u", "ú", "ü", "ű", "y", "A", "Á", "E", "É", "I", "Í", "O", "Ó", "Ö", "Ő", "U", "Ú", "Ü", "Ű", "Y"];
                 return vowels.includes(letter);
             }
-            
+
             $.get('items/' + id + '/modal', function (data) {
                 let art = isVowel(data.data.uniquename) ? 'az' : 'a';
                 $('#itemname').html(art);

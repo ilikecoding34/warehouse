@@ -10,19 +10,27 @@ class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['uniquename', 'serialnumber', 'quantity_id', 'minimumlevel', 'price', 'picture_id'];
+    protected $fillable = [
+        'uniquename',
+        'serialnumber',
+        'quantity',
+        'minimumlevel',
+        'price',
+        'picture_id',
+        'type_id'
+        ];
 
     /**
      * The roles that belong to the Item
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function types()
+    public function customfields()
     {
-        return $this->belongsToMany(Type::class, 'item_type')->withPivot('id', 'value')->withTimeStamps();
+        return $this->belongsToMany(Customfield::class, 'item_customfields')->withPivot('id', 'value')->withTimeStamps();
     }
 
-    public function getUsedTypeIds()
+    public function getUsedCustomfieldIds()
     {
         return $this->belongsToMany(Type::class, 'item_type');
     }
@@ -40,6 +48,26 @@ class Item extends Model
     public function quantity()
     {
         return $this->hasMany(Quantity::class);
+    }
+
+    /**
+     * The roles that belong to the Item
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'item_categories');
+    }
+
+    /**
+     * Get the user that owns the Item
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
     public function getLatestQuantity()

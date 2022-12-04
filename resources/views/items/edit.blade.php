@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Bejegyzés módosítása') }}</div>
 
                 <div class="card-body">
-                    
+
                     <form method="POST" action="{{ route('items.update', $item) }}">
                     @csrf
                     @method('PUT')
@@ -32,14 +32,14 @@
                         <label for="price">Ár</label>
                         <input type="text" class="form-control" id="price" name="price" value="{{$item->price}}">
                     </div>
-                    @foreach ($item->types as $type)
+                    @foreach ($item->customfields as $customfield)
                         <div class="form-group
-                        @if (in_array($type->id, Session::get('success') ?? []))
+                        @if (in_array($customfield->id, Session::get('success') ?? []))
                             alert alert-success
                         @endif
                         ">
-                            <label for="type_{{$type->id}}">{{$type->name}}</label>
-                            <input type="text" class="form-control" id="type_{{$type->id}}" name="typedatas[]" value="{{$type->pivot->value}}">
+                            <label for="type_{{$customfield->id}}">{{$customfield->name}}</label>
+                            <input type="text" class="form-control" id="customfield{{$customfield->id}}" name="customfieldsdatas[]" value="{{$type->pivot->value}}">
                         </div>
                     @endforeach
                     <div class="form-group">
@@ -62,16 +62,16 @@
                             <button type="submit" class="btn btn-success">Frissítés</button>
                         </div>
                     </form>
-                
+
                 <form method="POST" action="{{ route('items.addtype', $item->id) }}">
                     @csrf
                     @method('POST')
-                    @foreach ($item->types as $type)
+                    @foreach ($item->customfields as $customfield)
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$type->id}}" id="defaultCheck1" checked name="types[]">
+                                <input class="form-check-input" type="checkbox" value="{{$customfields->id}}" id="defaultCheck1" checked name="customfields[]">
                                 <label class="form-check-label" for="defaultCheck1">
-                                {{$type->name}}
+                                {{$customfields->name}}
                                 </label>
                             </div>
                         </div>

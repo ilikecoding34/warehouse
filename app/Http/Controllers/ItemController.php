@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Picture;
 use App\Models\Type;
+use App\Models\Category;
+use App\Models\Customfield;
 use App\Models\Quantity;
 use Illuminate\Http\Request;
 use DB;
@@ -42,7 +44,7 @@ class ItemController extends Controller
             $totalvalue += $value->price*$value->quantity;
         }
         */
-        return view('item_pages.index', compact('items','trashed', 'totalquantity', 'totalvalue'));
+        return view('items.index', compact('items','trashed', 'totalquantity', 'totalvalue'));
     }
 
     /**
@@ -54,7 +56,7 @@ class ItemController extends Controller
     {
         $types = Type::all();
         $pictures = Picture::all();
-        return view('item_pages.create', compact('pictures', 'types'));
+        return view('items.create', compact('pictures', 'types'));
     }
 
     /**
@@ -77,7 +79,7 @@ class ItemController extends Controller
 
         $item->save();
 
-        $item->types()->sync($request->types);
+        $item->customfields()->sync($request->customfields);
 
         $quantity = new Quantity();
 
@@ -99,12 +101,14 @@ class ItemController extends Controller
     {
         $units = [];
         $dates = [];
-        foreach ($item->quantity as $quantity) {
-            array_push($units, $quantity->value);
-            array_push($dates, '"'.$quantity->created_at->format('Y-m-d').'"');
+        if(count($item->quantity)>0){
+            foreach ($item->quantity as $quantity) {
+                array_push($units, $quantity->value);
+                array_push($dates, '"'.$quantity->created_at->format('Y-m-d').'"');
+            }
         }
 
-        return view('item_pages.show', compact('item', 'units', 'dates'));
+        return view('items.show', compact('item', 'units', 'dates'));
     }
 
     /**
@@ -115,15 +119,13 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        $tmparr = array();
-        foreach ($item->types as $value) {
-            array_push($tmparr, $value->id);
-        }
-        $unckeckedtypes = Type::whereNotIn('id', $tmparr)->get();
+        $checked = $item->customfields->pluck('id');
+
+        $unckeckedtypes = Customfield::whereNotIn('id', $checked)->get();
 
         $pictures = Picture::all();
 
-        return view('item_pages.edit', compact('item', 'pictures', 'unckeckedtypes'));
+        return view('items.edit', compact('item', 'pictures', 'unckeckedtypes'));
     }
 
     /**
@@ -137,9 +139,9 @@ class ItemController extends Controller
     {
         $quantityid = null;
 
-        foreach ($item->types as $value) {
+        foreach ($item->customfields as $value) {
             static $i = 0;
-            $item->types()->updateExistingPivot($value->pivot->type_id, ['value' => $request->typedatas[$i]]);
+            $item->customfields()->updateExistingPivot($value->pivot->type_id, ['value' => $request->customfieldsdatas[$i]]);
             $i++;
         }
 
@@ -150,10 +152,6 @@ class ItemController extends Controller
             $quantity->value = $request->quantity;
 
             $quantity->save();
-
-            $quantityid = $quantity->id;
-        }else{
-            $quantityid = $item->quantity_id;
         }
 
         $item->update([
@@ -183,7 +181,7 @@ class ItemController extends Controller
     public function addtype(Request $request, Item $item)
     {
 
-        $savedtypes = $item->types->pluck('id');
+        $savedtypes = $item->customfields->pluck('id');
         $changed = '';
         function typediff($old, $new){
             $diffarr = [];
@@ -194,11 +192,11 @@ class ItemController extends Controller
             }
             return $diffarr;
         }
-        if($request->types){
-            $changed = typediff($savedtypes, $request->types);
+        if($request->customfields){
+            $changed = typediff($savedtypes, $request->customfields);
         }
 
-        $item->types()->sync($request->types);
+        $item->customfields()->sync($request->customfields);
         return redirect()->route('items.edit', $item->id)->with('success', $changed);
     }
 

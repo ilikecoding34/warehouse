@@ -24,7 +24,7 @@ class CreateCustomfieldsTable extends Migration
         Schema::create('item_customfields', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
-            $table->unsignedBigInteger('customfields_id');
+            $table->unsignedBigInteger('customfield_id');
             $table->unsignedBigInteger('value');
             $table->timestamps();
 
@@ -33,7 +33,7 @@ class CreateCustomfieldsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('customfields_id')->references('id')->on('customfields')
+            $table->foreign('customfield_id')->references('id')->on('customfields')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

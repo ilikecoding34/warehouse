@@ -56,12 +56,14 @@
                         <input type="text" class="form-control" id="price" disabled name="price" value="{{$item->price}}">
                     </div>
                     <br>
-                    @foreach ($item->types as $type)
+                    @if(count($item->customfields)>0)
+                    @foreach ($item->customfields as $field)
                         <div class="form-group">
-                            <label for="price">{{$type->name}}</label>
+                            <label for="price">{{$field->name}}</label>
                             <input type="text" class="form-control" id="price" disabled name="price" value="{{$type->pivot->value}}">
                         </div>
                     @endforeach
+                    @endif
                     <br>
                     <div class="col">
                         @if(isset($item->picture_id))
@@ -78,16 +80,19 @@
                 </button>
                 <div class="collapse" id="collapseExample">
                     <div>
+                        @if (count($item->quantity)>0)
                         @foreach ($item->quantity as $quantity)
                             Jelenlegi mennyiség: {{$quantity->value}} - {{$quantity->created_at}}
                             <br>
                         @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@isset($dates)
 <script>
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
@@ -160,4 +165,5 @@
         }
     });
     </script>
+@endisset
 @endsection

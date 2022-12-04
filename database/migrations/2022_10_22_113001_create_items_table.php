@@ -17,12 +17,11 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('uniquename')->unique();
             $table->string('serialnumber')->unique();
-            $table->unsignedBigInteger('minimumlevel');
-            $table->unsignedBigInteger('quantity');
+            $table->unsignedBigInteger('minimumlevel')->nullable();
             $table->string('company');
             $table->string('location');
             $table->float('price');
-            $table->string('file_path')->nullable();
+            $table->unsignedBigInteger('picture_id')->nullable();
             $table->string('description');
             $table->unsignedBigInteger('type_id');
             $table->softDeletes();

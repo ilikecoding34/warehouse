@@ -34,14 +34,14 @@
                         @foreach ($types as $item)
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$item->id}}" id="defaultCheck1" name="types[]">
+                                <input class="form-check-input" type="checkbox" value="{{$item->id}}" id="defaultCheck1" name="customfields[]">
                                 <label class="form-check-label" for="defaultCheck1">
                                 {{$item->name}}
                                 </label>
                             </div>
                         </div>
                         @endforeach
-                        
+
                         <div class="form-group">
                             <label for="picture_select">Kép kiválasztás:</label>
                             <select class="form-control" style="border: 1px solid" id="picture_select" name="picture_select">
