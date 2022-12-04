@@ -8,16 +8,16 @@
             <div class="card-header">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        {{ __('Kategória') }}
+                        {{ __('Egyedi mező') }}
                     </div>
                     <div>
-                        <a href="{{ route('categories.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
+                        <a href="{{ route('customfields.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
                     </div>
                 </div>
             </div>
                 <div class="card-body">
 		<div id="content">
-        <form method="POST" action="{{ route('categories.store') }}">
+        <form method="POST" action="{{ route('customfields.store') }}">
             @csrf
             <div class="field">
                 Név

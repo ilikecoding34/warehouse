@@ -8,17 +8,18 @@
             <div class="card-header">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        {{ __('Kategória') }}
+                        {{ __('Egyedi mező') }}
                     </div>
                     <div>
-                        <a href="{{ route('categories.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
+                        <a href="{{ route('customfields.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
                     </div>
                 </div>
             </div>
                 <div class="card-body">
 		<div id="content">
-        <form method="POST" action="{{ route('categories.store') }}">
+        <form method="POST" action="{{ route('customfields.update',$customfield) }}" >
             @csrf
+            @method('PUT')
             <div class="field">
                 Név
                 <div class="control">
@@ -26,7 +27,7 @@
                     type="text"
                     name="name"
                     id="name"
-                    value="{{ old('name') }}">
+                    value="{{ $type->name }}">
 
                     @error('name')
                         <p class="help is-danger">{{ $errors->first('name')}}</p>
@@ -37,9 +38,11 @@
 
             <div class="field">
                 <div class="control">
-                    <button type="submit" class="btn btn-primary">Mentés</button>
+                    <button type="submit" class="btn btn-success">Frissítés</button>
                 </div>
             </div>
+
+
         </form>
     </div>
 </div>

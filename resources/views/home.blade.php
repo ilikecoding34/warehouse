@@ -26,8 +26,20 @@
                         </div>
                         <div class="card" style="width: 10rem; display: inline-block">
                             <div class="card-body">
-                                <p class="card-title text-center">Tétel típusok</p>
+                                <p class="card-title text-center">Típusok</p>
                                 <a class="stretched-link" href="{{route('types.index')}}"></a>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 10rem; display: inline-block">
+                            <div class="card-body">
+                                <p class="card-title text-center">Kategóriák</p>
+                                <a class="stretched-link" href="{{route('categories.index')}}"></a>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 10rem; display: inline-block">
+                            <div class="card-body">
+                                <p class="card-title text-center">Egyedi mezők</p>
+                                <a class="stretched-link" href="{{route('customfields.index')}}"></a>
                             </div>
                         </div>
                     </div>

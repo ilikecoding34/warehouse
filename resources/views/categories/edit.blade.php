@@ -8,16 +8,16 @@
             <div class="card-header">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        {{ __('Piktogrammok') }}
+                        {{ __('Kategória') }}
                     </div>
                     <div>
-                        <a href="{{ route('types.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
+                        <a href="{{ route('categories.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>
                     </div>
-                </div>    
+                </div>
             </div>
                 <div class="card-body">
 		<div id="content">
-        <form method="POST" action="{{ route('types.update',$type) }}" >
+        <form method="POST" action="{{ route('categories.update',$category) }}" >
             @csrf
             @method('PUT')
             <div class="field">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <br>
-           
+
             <div class="field">
                 <div class="control">
                     <button type="submit" class="btn btn-success">Frissítés</button>
