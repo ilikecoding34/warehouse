@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomfieldsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateCustomfieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('customfields', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->softDeletes();
             $table->timestamps();
-
         });
 
-        Schema::create('item_customfields', function (Blueprint $table) {
+        Schema::create('item_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
-            $table->unsignedBigInteger('customfields_id');
-            $table->unsignedBigInteger('value');
+            $table->unsignedBigInteger('categories_id');
             $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')
@@ -32,11 +31,13 @@ class CreateCustomfieldsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('customfields_id')->references('id')->on('customfields')
+            $table->foreign('categories_id')->references('id')->on('categories')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
         });
+
     }
 
     /**
@@ -46,6 +47,6 @@ class CreateCustomfieldsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customfields');
+        Schema::dropIfExists('categories');
     }
-}
+};

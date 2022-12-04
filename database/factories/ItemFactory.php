@@ -14,7 +14,12 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'uniquename' => $this->faker->unique()->word(),
+            'serialnumber' => $this->faker->unique()->numberBetween(10,20000),
+            'minimumlevel' => 15,
+            'price' => 20,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

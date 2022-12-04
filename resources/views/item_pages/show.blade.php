@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </div>
-                    
+
                 <div class="card-body">
                     <a href="{{route('items.edit', $item)}}"><button class="btn btn-warning">Szerkesztés</button></a>
                     <div class="form-group">
@@ -31,12 +31,12 @@
                                     <div class="row">
                                         <div class="col">
                                             <label for="quantity">Kezdő mennyiség</label>
-                                            <input type="text" class="form-control" id="quantity" disabled name="quantity" 
+                                            <input type="text" class="form-control" id="quantity" disabled name="quantity"
                                             value="@if (count($item->quantity) > 0){{$item->quantity->first()->value}}@endif">
                                         </div>
                                         <div class="col">
                                             <label for="quantity">Jelenlegi mennyiség</label>
-                                            <input type="text" class="form-control" id="quantity" disabled name="quantity" 
+                                            <input type="text" class="form-control" id="quantity" disabled name="quantity"
                                             value="@if (count($item->quantity) > 0){{$item->quantity->last()->value}}@endif">
                                         </div>
                                         <div class="col">
@@ -149,8 +149,8 @@
                 annotations: {
                     line1: {
                     type: 'line',
-                    yMin: {{ json_encode($item->minimumlevel) }}, 
-                    yMax: {{ json_encode($item->minimumlevel) }}, 
+                    yMin: {{ json_encode($item->minimumlevel) }},
+                    yMax: {{ json_encode($item->minimumlevel) }},
                     borderColor: 'rgb(255, 99, 132)',
                     borderWidth: 2,
                     }

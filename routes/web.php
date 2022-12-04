@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Item;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,27 +42,27 @@ return;
 */
     return view('welcome');
 });
-/*
+
 Route::get('/faker', function () {
-    
+
     $items = Item::factory()->count(100)->make();
     foreach ($items as $key => $value) {
         $value->save();
     }
      return;
  });
-*/
+
 Route::get('/qrcode', [QrCodeController::class, 'index']);
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function() {
+//Route::group(['middleware' => ['auth']], function() {
     Route::resource('items', ItemController::class);
     Route::resource('pictures', PictureController::class);
     Route::resource('types', TypeController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
-        
+
     //Egyedi útvonalak
 
     Route::get('/pictures/{id}/modal', [PictureController::class, 'modal'])->name('pictures.modal');
@@ -74,6 +75,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/items/restore/{id}', [ItemController::class, 'restore'])->name('items.restore');
 
-});
+//});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -18,8 +18,13 @@ class CreateItemsTable extends Migration
             $table->string('uniquename')->unique();
             $table->string('serialnumber')->unique();
             $table->unsignedBigInteger('minimumlevel');
+            $table->unsignedBigInteger('quantity');
+            $table->string('company');
+            $table->string('location');
             $table->float('price');
             $table->string('file_path')->nullable();
+            $table->string('description');
+            $table->unsignedBigInteger('type_id');
             $table->softDeletes();
             $table->timestamps();
         });

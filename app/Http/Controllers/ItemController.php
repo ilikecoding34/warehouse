@@ -33,7 +33,7 @@ class ItemController extends Controller
     {
         $items = Item::with('picture', 'quantity')->get();
         $trashed = Item::onlyTrashed()->get();
-        
+
         $totalquantity = 0;
         $totalvalue = 0;
         /*
@@ -103,7 +103,7 @@ class ItemController extends Controller
             array_push($units, $quantity->value);
             array_push($dates, '"'.$quantity->created_at->format('Y-m-d').'"');
         }
-        
+
         return view('item_pages.show', compact('item', 'units', 'dates'));
     }
 
@@ -148,14 +148,14 @@ class ItemController extends Controller
 
             $quantity->item_id = $item->id;
             $quantity->value = $request->quantity;
-            
+
             $quantity->save();
 
             $quantityid = $quantity->id;
         }else{
             $quantityid = $item->quantity_id;
         }
-        
+
         $item->update([
             'uniquename' => $request->uniquename,
             'serialnumber' => $request->serialnumber,
@@ -163,7 +163,7 @@ class ItemController extends Controller
             'price' => $request->price,
             'picture_id' => $request->picture_select,
         ]);
-        
+
         return redirect()->route('items.index');
     }
 
@@ -182,7 +182,7 @@ class ItemController extends Controller
 
     public function addtype(Request $request, Item $item)
     {
-        
+
         $savedtypes = $item->types->pluck('id');
         $changed = '';
         function typediff($old, $new){
@@ -197,7 +197,7 @@ class ItemController extends Controller
         if($request->types){
             $changed = typediff($savedtypes, $request->types);
         }
-        
+
         $item->types()->sync($request->types);
         return redirect()->route('items.edit', $item->id)->with('success', $changed);
     }

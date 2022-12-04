@@ -8,7 +8,7 @@ use App\Models\Item;
 class DataTables extends Component
 {
     public $items;
-    public $sortedfield;
+    public $sortedfield = 'id';
     public $serialnumber = '';
     public $uname = '';
    // public $allfilter = [];
@@ -23,7 +23,7 @@ class DataTables extends Component
     {
         $this->sortedfield == $field ? $this->direction = $this->direction == 'asc' ? 'desc' : 'asc' : $this->direction = 'desc';
         $this->sortedfield = $field;
-        
+
         $this->items = Item::orderBy($field, $this->direction)->get();
     }
     public function render()
@@ -39,11 +39,11 @@ class DataTables extends Component
         }
 
         if(count($allfilter)>0){
-            $this->items = Item::where($allfilter)->get();
+            $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
         }else{
-            $this->items = Item::all();
+            $this->items = Item::orderBy($this->sortedfield, $this->direction)->get();
         }
-        
+
         return view('livewire.data-tables', ['items' => $this->items])->layout('layouts.app');
     }
 }

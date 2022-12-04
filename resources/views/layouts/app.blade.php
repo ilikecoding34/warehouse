@@ -30,7 +30,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     @livewireStyles
 </head>
 <body>
@@ -55,7 +55,6 @@
                         <!-- Authentication Links -->
                         @guest
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Belépés') }}</a></li>
-                            <li><a class="nav-link" href="{{ route('register') }}">{{ __('Regisztráció') }}</a></li>
                         @else
                             <li><a class="nav-link" href="{{ route('users.index') }}">Felhasználók</a></li>
                             <li><a class="nav-link" href="{{ route('roles.index') }}">Jogosultságok</a></li>
@@ -78,7 +77,7 @@
                                 </div>
                             </li>
                         @endguest
-                       
+
                     </ul>
                 </div>
             </div>
