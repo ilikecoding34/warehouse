@@ -5,7 +5,7 @@
 <div id="wrapper">
 	<div id="page" class="container">
         <div class="card">
-            <div class="card-header">{{ __('Piktogrammok') }}</div>
+            <div class="card-header">{{ __('Tipusok') }}</div>
                 <div class="card-body">
 		<div id="content">
             <table class="table">
@@ -27,7 +27,7 @@
                 @endforeach
                 </tbody>
             </table>
-            <a class="btn btn-success" href="{{ route('types.create') }}"> Új piktogramm létrehozása</a>
+            <a class="btn btn-success" href="{{ route('types.create') }}"> Új tipus létrehozása</a>
 
             @if ($trashed->count() > 0)
             <br>
@@ -85,9 +85,9 @@
 <script>
 
     $(document).ready(function () {
-    
+
     $('body').on('click', '#softDelete', function (event) {
-        
+
         event.preventDefault();
         var id = $(this).data('id');
         function isVowel(word) {
@@ -95,7 +95,7 @@
             let vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "ö", "ő", "u", "ú", "ü", "ű", "y", "A", "Á", "E", "É", "I", "Í", "O", "Ó", "Ö", "Ő", "U", "Ú", "Ü", "Ű", "Y"];
             return vowels.includes(letter);
         }
-        
+
         $.get('types/' + id + '/modal', function (data) {
              let mod = isVowel(data.data.name) ? 'az' : 'a';
              $('#symbolname').html(mod);
@@ -103,8 +103,8 @@
          });
 
     });
-    
-    }); 
+
+    });
 </script>
 
 

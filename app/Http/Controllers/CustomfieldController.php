@@ -14,7 +14,9 @@ class CustomfieldController extends Controller
      */
     public function index()
     {
-        //
+        $customfields = Customfield::orderBy('name')->get();
+        $trashed = Customfield::onlyTrashed()->get();
+        return view('customfields.index', compact('customfields', 'trashed'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CustomfieldController extends Controller
      */
     public function create()
     {
-        //
+        return view('customfields.create');
     }
 
     /**
@@ -35,7 +37,11 @@ class CustomfieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type = new Customfield;
+        $type->name = $request->name;
+        $type->save();
+
+        return redirect()->route('customfields.index');
     }
 
     /**
@@ -46,7 +52,7 @@ class CustomfieldController extends Controller
      */
     public function show(Customfield $customfield)
     {
-        //
+        return view('customfields.show', compact('customfield'));
     }
 
     /**
@@ -57,7 +63,7 @@ class CustomfieldController extends Controller
      */
     public function edit(Customfield $customfield)
     {
-        //
+        return view('customfields.edit', compact('customfield'));
     }
 
     /**
@@ -69,7 +75,10 @@ class CustomfieldController extends Controller
      */
     public function update(Request $request, Customfield $customfield)
     {
-        //
+        $customfield->name = $request->name;
+        $customfield->save();
+
+        return redirect()->route('customfields.index');
     }
 
     /**
@@ -80,6 +89,21 @@ class CustomfieldController extends Controller
      */
     public function destroy(Customfield $customfield)
     {
-        //
+        $customfield->delete($customfield->id);
+        return redirect()->route('customfields.index');
+    }
+
+    public function modal($id)
+    {
+        $picture = Customfield::find($id);
+	    return response()->json([
+	      'data' => $picture
+	    ]);
+    }
+
+    public function restore($id)
+    {
+        Customfield::withTrashed()->find($id)->restore();
+	    return redirect()->route('types.index');
     }
 }

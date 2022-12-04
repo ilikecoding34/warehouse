@@ -16,7 +16,7 @@ class TypeController extends Controller
     {
         $types = Type::orderBy('name')->get();
         $trashed = Type::onlyTrashed()->get();
-        return view('type_pages.index', compact('types', 'trashed'));
+        return view('types.index', compact('types', 'trashed'));
     }
 
     /**
@@ -26,7 +26,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view('type_pages.create');
+        return view('types.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        return view('type_pages.show', compact('type'));
+        return view('types.show', compact('type'));
     }
 
     /**
@@ -63,7 +63,7 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        return view('type_pages.edit', compact('type'));
+        return view('types.edit', compact('type'));
     }
 
     /**
