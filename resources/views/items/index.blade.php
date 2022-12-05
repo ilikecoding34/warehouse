@@ -59,9 +59,8 @@
                             <div>
                                 <a href="{{route('items.show', $item)}}"><button class="btn btn-primary">Megtekintés</button></a>
                                 <a href="{{route('items.edit', $item)}}"><button class="btn btn-warning">Szerkesztés</button></a>
-                                <button type="button" class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#delete_modal" data-id="{{ $item->id }}">
-                                    Törlés
-                                </button>
+                                <a class="btn btn-danger waves-effect waves-light remove-record" data-bs-toggle="modal" data-url="{{route('items.destroy', $item)}}" data-id="{{$item->id}}" data-bs-target="#custom-width-modal">Törlés</a>
+                                
                             </div>
                         </td>
                     </tr>
@@ -101,50 +100,6 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="delete_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Elem törlése</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <form id="companydata" method="POST" action="" >
-            </div>
-            <div class="modal-body">
+@include('modals.deletemodal', ['routeurl' => 'items'])
 
-                    @method('DELETE')
-                    @csrf
-                    <input id="id" name="id" hidden value="">
-                    <div class="modal-content">
-                        <h5 class="text-center">Biztos törölni szeretné <span id="itemname"></span> <span id="name"></span> elemet?</h5>
-
-                    </div>
-
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                <button type="submit" class="btn btn-danger">Igen, Törlés</button>
-            </div>
-        </form>
-        </div>
-    </div>
-</div>
-<script>
-    $(document).on('click','.delete',function(){
-            let id = $(this).attr('data-id');
-            $('#id').val(id);
-
-            function isVowel(word) {
-                let letter = word.charAt(0);
-                let vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "ö", "ő", "u", "ú", "ü", "ű", "y", "A", "Á", "E", "É", "I", "Í", "O", "Ó", "Ö", "Ő", "U", "Ú", "Ü", "Ű", "Y"];
-                return vowels.includes(letter);
-            }
-
-            $.get('items/' + id + '/modal', function (data) {
-                let art = isVowel(data.data.uniquename) ? 'az' : 'a';
-                $('#itemname').html(art);
-                $('#name').html(data.data.uniquename);
-            });
-       });
-</script>
 @endsection
