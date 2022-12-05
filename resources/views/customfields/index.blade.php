@@ -21,7 +21,7 @@
                     <td class="text-center">
                         <a href="{{ route('customfields.show', $item) }}"><button class="btn btn-primary" type="submit">Megtekint</button></a>
                         <a href="{{ route('customfields.edit', $item) }}"><button class="btn btn-warning" type="submit">Szerkesztés</button></a>
-                        <button class="btn btn-danger" id="softDelete" data-toggle="modal" data-target='#delete_modal_{{$item->id}}' data-id="{{ $item->id }}">Törlés</button>
+                        <a class="btn btn-danger waves-effect waves-light remove-record" data-bs-toggle="modal" data-url="{{route('customfields.destroy', $item)}}" data-id="{{$item->id}}" data-bs-target="#custom-width-modal">Törlés</a>   
                     </td>
                 </tr>
                 @endforeach
@@ -62,50 +62,7 @@
 </div>
 </div>
 </div>
-@if (isset($customfields))
-    @foreach ($customfields as $item)
-        <div class="modal" id="delete_modal_{{$item->id}}">
-            <div class="modal-dialog">
-                <form id="companydata" method="POST" action="{{route('customfields.destroy', $item) }}" >
-                    @method('DELETE')
-                    @csrf
-                    <div class="modal-content">
-                        <h5 class="text-center">Biztos törölni szeretné <span id="symbolname"></span> <span id="name"></span> elemet?</h5>
-                        <div class="modal-footer justify-content-between">
-                            <button id="btnClose" type="button" class="btn btn-secondary" data-dismiss="modal">Mégse</button>
-                            <button type="submit" class="btn btn-danger">Igen, Törlés</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    @endforeach
-@endif
-
-<script>
-
-    $(document).ready(function () {
-
-    $('body').on('click', '#softDelete', function (event) {
-
-        event.preventDefault();
-        var id = $(this).data('id');
-        function isVowel(word) {
-            let letter = word.charAt(0);
-            let vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "ö", "ő", "u", "ú", "ü", "ű", "y", "A", "Á", "E", "É", "I", "Í", "O", "Ó", "Ö", "Ő", "U", "Ú", "Ü", "Ű", "Y"];
-            return vowels.includes(letter);
-        }
-
-        $.get('customfields/' + id + '/modal', function (data) {
-             let mod = isVowel(data.data.name) ? 'az' : 'a';
-             $('#symbolname').html(mod);
-             $('#name').html(data.data.name);
-         });
-
-    });
-
-    });
-</script>
+@include('modals.deletemodal', ['routeurl' => 'customfields'])
 
 
 @endsection

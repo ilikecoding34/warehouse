@@ -60,7 +60,6 @@
                                 <a href="{{route('items.show', $item)}}"><button class="btn btn-primary">Megtekintés</button></a>
                                 <a href="{{route('items.edit', $item)}}"><button class="btn btn-warning">Szerkesztés</button></a>
                                 <a class="btn btn-danger waves-effect waves-light remove-record" data-bs-toggle="modal" data-url="{{route('items.destroy', $item)}}" data-id="{{$item->id}}" data-bs-target="#custom-width-modal">Törlés</a>
-                                
                             </div>
                         </td>
                     </tr>
