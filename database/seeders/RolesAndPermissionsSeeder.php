@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
+        //php artisan db:seed --class=RolesAndPermissionsSeeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 

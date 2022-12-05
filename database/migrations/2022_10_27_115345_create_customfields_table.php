@@ -25,7 +25,7 @@ class CreateCustomfieldsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('customfield_id');
-            $table->unsignedBigInteger('value');
+            $table->string('value')->nullable();
             $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')

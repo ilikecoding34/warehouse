@@ -39,7 +39,7 @@
                         @endif
                         ">
                             <label for="type_{{$customfield->id}}">{{$customfield->name}}</label>
-                            <input type="text" class="form-control" id="customfield{{$customfield->id}}" name="customfieldsdatas[]" value="{{$type->pivot->value}}">
+                            <input type="text" class="form-control" id="customfield{{$customfield->id}}" name="customfieldsdatas[]" value="{{$customfield->pivot->value}}">
                         </div>
                     @endforeach
                     <div class="form-group">
@@ -69,9 +69,9 @@
                     @foreach ($item->customfields as $customfield)
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$customfields->id}}" id="defaultCheck1" checked name="customfields[]">
+                                <input class="form-check-input" type="checkbox" value="{{$customfield->id}}" id="defaultCheck1" checked name="customfields[]">
                                 <label class="form-check-label" for="defaultCheck1">
-                                {{$customfields->name}}
+                                {{$customfield->name}}
                                 </label>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                     @foreach ($unckeckedtypes as $unckeckedtype)
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$unckeckedtype->id}}" id="defaultCheck1" name="types[]">
+                                <input class="form-check-input" type="checkbox" value="{{$unckeckedtype->id}}" id="defaultCheck1" name="customfields[]">
                                 <label class="form-check-label" for="defaultCheck1">
                                 {{$unckeckedtype->name}}
                                 </label>

@@ -60,7 +60,7 @@
                     @foreach ($item->customfields as $field)
                         <div class="form-group">
                             <label for="price">{{$field->name}}</label>
-                            <input type="text" class="form-control" id="price" disabled name="price" value="{{$type->pivot->value}}">
+                            <input type="text" class="form-control" id="price" disabled name="price" value="{{$field->pivot->value}}">
                         </div>
                     @endforeach
                     @endif

@@ -137,11 +137,10 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $quantityid = null;
-
+        
         foreach ($item->customfields as $value) {
             static $i = 0;
-            $item->customfields()->updateExistingPivot($value->pivot->type_id, ['value' => $request->customfieldsdatas[$i]]);
+            $item->customfields()->updateExistingPivot($value->pivot->customfield_id, ['value' => $request->customfieldsdatas[$i]]);
             $i++;
         }
 
