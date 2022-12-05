@@ -32,6 +32,18 @@
                         <label for="price">Ár</label>
                         <input type="text" class="form-control" id="price" name="price" value="{{$item->price}}">
                     </div>
+                    <div class="form-group">
+                        <label for="description">Leírás</label>
+                        <input type="text" class="form-control" id="description" name="description" value="{{$item->description}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Hely</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{$item->location}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Gyártó</label>
+                        <input type="text" class="form-control" id="company" name="company" value="{{$item->company}}">
+                    </div>
                     @foreach ($item->customfields as $customfield)
                         <div class="form-group
                         @if (in_array($customfield->id, Session::get('success') ?? []))
@@ -42,6 +54,21 @@
                             <input type="text" class="form-control" id="customfield{{$customfield->id}}" name="customfieldsdatas[]" value="{{$customfield->pivot->value}}">
                         </div>
                     @endforeach
+                    <div class="form-group">
+                        <label for="type_select">Típus:</label>
+                        <select class="select text-wrap form-control" style="border: 1px solid" id="type_select" name="type_select" class="form-control">
+                            <option value=""></option>
+                            @foreach ($types as $type)
+                                <option value="{{$type->id}}"
+                                    @if ($type->id == $item->type_id)
+                                        selected
+                                    @endif
+                                    >
+                                    {{$type->name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="picture_select">Kép:</label>
                         <select class="select text-wrap form-control" style="border: 1px solid" id="picture_select" name="picture_select" class="form-control">

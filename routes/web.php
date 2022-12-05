@@ -46,12 +46,12 @@ return;
 });
 
 Route::get('/faker', function () {
-
+/*
     $items = User::factory()->count(5)->make();
     foreach ($items as $key => $value) {
         $value->save();
     }
-
+*/
     $items = Item::factory()->count(50)->make();
     foreach ($items as $key => $value) {
         $value->save();

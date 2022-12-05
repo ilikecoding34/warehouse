@@ -11,6 +11,10 @@ class DataTables extends Component
     public $sortedfield = 'id';
     public $serialnumber = '';
     public $uname = '';
+    public $price = '';
+    public $location = '';
+    public $company = '';
+    public $description = '';
    // public $allfilter = [];
 
     public $direction = 'asc';
@@ -35,6 +39,22 @@ class DataTables extends Component
         }
         if($this->uname != ''){
             $uniquefilter = ['uniquename', 'like', $this->uname."%"];
+            array_push($allfilter, $uniquefilter);
+        }
+        if($this->price != ''){
+            $serialfilter = ['price', 'like', $this->price."%"];
+            array_push($allfilter, $serialfilter);
+        }
+        if($this->location != ''){
+            $uniquefilter = ['location', 'like', $this->location."%"];
+            array_push($allfilter, $uniquefilter);
+        }
+        if($this->company != ''){
+            $serialfilter = ['company', 'like', $this->company."%"];
+            array_push($allfilter, $serialfilter);
+        }
+        if($this->description != ''){
+            $uniquefilter = ['description', 'like', $this->description."%"];
             array_push($allfilter, $uniquefilter);
         }
 

@@ -17,6 +17,15 @@
               <th scope="col" role="button">
                 <span wire:click="sortBy('price')">price</span>
             </th>
+            <th scope="col" role="button">
+              <span wire:click="sortBy('type')">location</span>
+          </th>
+          <th scope="col" role="button">
+            <span wire:click="sortBy('company')">company</span>
+       
+        <th scope="col" role="button">
+          <span wire:click="sortBy('description')">description</span>
+      </th>
               <th scope="col">Művelet</th>
             </tr>
             <tr>
@@ -33,9 +42,24 @@
                   </th>
                 <th>
                   <div class="col-xs-2">
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" wire:model="price">
                   </div>
               </th>
+              <th>
+                <div class="col-xs-2">
+                  <input class="form-control" type="text" wire:model="location">
+                </div>
+            </th>
+            <th>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" wire:model="company">
+              </div>
+          </th>
+          <th>
+            <div class="col-xs-2">
+              <input class="form-control" type="text" wire:model="description">
+            </div>
+        </th>
                 <th></th>
               </tr>
           </thead>
@@ -46,6 +70,9 @@
                 <td>{{ $item->serialnumber }}</td>
                 <td>{{ $item->uniquename }}</td>
                 <td>{{ $item->price }}</td>
+                <td>{{ $item->location }}</td>
+                <td>{{ $item->company }}</td>
+                <td>{{ $item->description }}</td>
                 <td><a class="btn" href="{{route('items.show', $item->id)}}">Megnyitás</a></td>
               </tr>
             @endforeach

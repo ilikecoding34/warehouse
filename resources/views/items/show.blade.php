@@ -55,12 +55,28 @@
                         <label for="price">Ár</label>
                         <input type="text" class="form-control" id="price" disabled name="price" value="{{$item->price}}">
                     </div>
+                    <div class="form-group">
+                        <label for="description">Leírás</label>
+                        <input type="text" class="form-control" id="description" disabled name="description" value="{{$item->description}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Hely</label>
+                        <input type="text" class="form-control" id="location" disabled name="location" value="{{$item->location}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Gyártó</label>
+                        <input type="text" class="form-control" id="company" disabled name="company" value="{{$item->company}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Típus</label>
+                        <input type="text" class="form-control" id="type" disabled name="type" value="{{$item->type->name}}">
+                    </div>
                     <br>
                     @if(count($item->customfields)>0)
                     @foreach ($item->customfields as $field)
                         <div class="form-group">
-                            <label for="price">{{$field->name}}</label>
-                            <input type="text" class="form-control" id="price" disabled name="price" value="{{$field->pivot->value}}">
+                            <label for="customfieldvalue">{{$field->name}}</label>
+                            <input type="text" class="form-control" id="customfieldvalue" disabled name="customfieldvalue" value="{{$field->pivot->value}}">
                         </div>
                     @endforeach
                     @endif

@@ -123,9 +123,11 @@ class ItemController extends Controller
 
         $unckeckedtypes = Customfield::whereNotIn('id', $checked)->get();
 
+        $types = Type::all();
+
         $pictures = Picture::all();
 
-        return view('items.edit', compact('item', 'pictures', 'unckeckedtypes'));
+        return view('items.edit', compact('item', 'pictures', 'unckeckedtypes', 'types'));
     }
 
     /**
@@ -137,7 +139,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        
+
         foreach ($item->customfields as $value) {
             static $i = 0;
             $item->customfields()->updateExistingPivot($value->pivot->customfield_id, ['value' => $request->customfieldsdatas[$i]]);
@@ -172,6 +174,7 @@ class ItemController extends Controller
      */
     public function destroy(Request $request)
     {
+        
         Item::find($request->id) ? Item::destroy($request->id) : Item::onlyTrashed()->find($request->id)->forceDelete();
 
         return redirect()->route('items.index');
