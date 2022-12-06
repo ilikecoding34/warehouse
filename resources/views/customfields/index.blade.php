@@ -62,7 +62,7 @@
 </div>
 </div>
 </div>
-@include('modals.deletemodal', ['routeurl' => 'customfields'])
+@include('modals.deletemodal', ['routeurl' => 'customfields', 'name' => 'name'])
 
 
 @endsection

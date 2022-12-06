@@ -8,7 +8,7 @@
             <div class="card-header">
                 <div class="d-flex">
                     <div class="flex-grow-1">
-                        {{ __('Piktogrammok') }}
+                        {{ __('Képek') }}
                     </div>
                     <div>
                         <a href="{{ route('pictures.index') }}"><button class="btn btn-primary" type="submit">Vissza</button></a>

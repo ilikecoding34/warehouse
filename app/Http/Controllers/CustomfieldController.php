@@ -104,6 +104,6 @@ class CustomfieldController extends Controller
     public function restore($id)
     {
         Customfield::withTrashed()->find($id)->restore();
-	    return redirect()->route('types.index');
+	    return redirect()->route('customfields.index');
     }
 }

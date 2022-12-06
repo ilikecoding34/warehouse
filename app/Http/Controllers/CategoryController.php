@@ -104,6 +104,6 @@ class CategoryController extends Controller
     public function restore($id)
     {
         Category::withTrashed()->find($id)->restore();
-	    return redirect()->route('types.index');
+	    return redirect()->route('categories.index');
     }
 }

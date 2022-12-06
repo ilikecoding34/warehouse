@@ -3,7 +3,7 @@
 <form action="" method="POST" class="remove-record-model">
     @method('DELETE')
     @csrf
-    <div id="custom-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div id="custom-width-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" style="width:55%;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -24,7 +24,6 @@
     </div>
 </form>
 
-
 <script>
     $(document).on('click','.remove-record',function(){
         let id = $(this).attr('data-id');
@@ -41,11 +40,11 @@
             let vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "ö", "ő", "u", "ú", "ü", "ű", "y", "A", "Á", "E", "É", "I", "Í", "O", "Ó", "Ö", "Ő", "U", "Ú", "Ü", "Ű", "Y"];
             return vowels.includes(letter);
         }
-
-        $.get('{{$routeurl}}/' + id + '/modal', function (data) {
-            let art = isVowel(data.data.uniquename) ? 'az' : 'a';
+        
+        $.get('/{{$routeurl}}/' + id + '/modal', function (data) {
+            let art = isVowel(data.data.{{$name}}) ? 'az' : 'a';
             $('#itemname').html(art);
-            $('#name').html(data.data.uniquename);
+            $('#name').html(data.data.{{$name}});
         });
     });
 </script>

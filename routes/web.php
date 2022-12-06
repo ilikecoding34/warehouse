@@ -45,6 +45,10 @@ return;
     return view('welcome');
 });
 
+Route::get('/users', function () {
+    return User::all();
+});
+
 Route::get('/faker', function () {
 /*
     $items = User::factory()->count(5)->make();

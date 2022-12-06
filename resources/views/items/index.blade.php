@@ -99,6 +99,6 @@
     </div>
 </div>
 
-@include('modals.deletemodal', ['routeurl' => 'items'])
+@include('modals.deletemodal', ['routeurl' => 'items', 'name' => 'uniquename'])
 
 @endsection

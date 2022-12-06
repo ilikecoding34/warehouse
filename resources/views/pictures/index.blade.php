@@ -5,7 +5,7 @@
 <div id="wrapper">
 	<div id="page" class="container">
         <div class="card">
-            <div class="card-header">{{ __('Piktogrammok') }}</div>
+            <div class="card-header">{{ __('Képek') }}</div>
                 <div class="card-body">
 		<div id="content">
             <table class="table">
@@ -31,7 +31,7 @@
                 @endforeach
                 </tbody>
             </table>
-            <a class="btn btn-success" href="{{ route('pictures.create') }}"> Új piktogramm létrehozása</a>
+            <a class="btn btn-success" href="{{ route('pictures.create') }}"> Új kép feltöltése</a>
 
             @if ($trashed->count() > 0)
             <br>
@@ -67,6 +67,6 @@
 </div>
 </div>
 
-@include('modals.deletemodal', ['routeurl' => 'pictures'])
+@include('modals.deletemodal', ['routeurl' => 'pictures', 'name' => 'name'])
 
 @endsection

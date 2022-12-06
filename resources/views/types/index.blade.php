@@ -63,6 +63,6 @@
 </div>
 </div>
 
-@include('modals.deletemodal', ['routeurl' => 'types'])
+@include('modals.deletemodal', ['routeurl' => 'types', 'name' => 'groupname'])
 
 @endsection
