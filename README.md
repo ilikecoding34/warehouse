@@ -10,17 +10,17 @@
 ## About usage of this project
 
 First steps
-git clone https://github.com/ilikecoding34/warehouse.git
-cd warehouse
-composer install
-npm install
-php artisan key:generate
-setup your database parameters in .env file
-php artisan migrate
-php artisan db:seed --class=DatabaseSeeder
-php artisan db:seed --class=RolesAndPermissionsSeeder
-php artisan serve
-open url: localhost:8000
+- git clone https://github.com/ilikecoding34/warehouse.git
+- cd warehouse
+- composer install
+- npm install
+- php artisan key:generate
+- setup your database parameters in .env file
+- php artisan migrate
+- php artisan db:seed --class=DatabaseSeeder
+- php artisan db:seed --class=RolesAndPermissionsSeeder
+- php artisan serve
+- open url: localhost:8000
 
 ## About Laravel
 
