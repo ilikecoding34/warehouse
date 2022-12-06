@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Item;
+use App\Models\Quantity;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,19 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        $user = User::create([
-            'name' => 'Hardik Savani', 
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('123456')
-        ]);
-      
-        $role = Role::create(['name' => 'super-admin']);
-       
-        $permissions = Permission::pluck('id','id')->all();
-     
-        $role->syncPermissions($permissions);
-       
-        $user->assignRole([$role->id]);
+      User::factory(10)->create();
+
+      for($i = 0; $i < 50; $i++){
+        $item = Item::factory()->create();
+        $quantity = Quantity::factory()->create(['item_id' => $item->id]);
+      }
+
     }
 }
