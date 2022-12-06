@@ -20,11 +20,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                              <th scope="col">Egyedi név</th>
-                              <th scope="col">Szériaszám</th>
-                              <th scope="col">Mennyiség</th>
+                              <th scope="col">Megnevezés</th>
+                              <th scope="col">Sorozatszám</th>
+                              <th scope="col">Darabszám</th>
                               <th scope="col">Minimum</th>
-                              <th scope="col">Ár</th>
+                              <th scope="col">Ár(€)</th>
                               <th scope="col">Kép</th>
                               <th scope="col">Művelet</th>
                             </tr>

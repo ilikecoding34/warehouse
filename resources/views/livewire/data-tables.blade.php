@@ -9,25 +9,25 @@
                 <span role="button" wire:click="sortBy('id')">#</span>
               </th>
               <th scope="col">
-                <span role="button" wire:click="sortBy('serialnumber')">serialnumber</span>
+                <span role="button" wire:click="sortBy('serialnumber')">Sorozatszám</span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('uniquename')">uniquename</span>
+                <span wire:click="sortBy('uniquename')">Megnevezés</span>
                 </th>
                 <th scope="col" role="button">
-                    <span wire:click="sortBy('value')">value</span>
+                    <span wire:click="sortBy('value')">Darabszám</span>
                 </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('price')">price</span>
+                <span wire:click="sortBy('price')">Ár(€)</span>
             </th>
             <th scope="col" role="button">
-              <span wire:click="sortBy('type')">location</span>
+              <span wire:click="sortBy('type')">Hely</span>
           </th>
           <th scope="col" role="button">
-            <span wire:click="sortBy('company')">company</span>
+            <span wire:click="sortBy('company')">Gyártó</span>
 
         <th scope="col" role="button">
-          <span wire:click="sortBy('description')">description</span>
+          <span wire:click="sortBy('description')">Leírás</span>
       </th>
               <th scope="col">Művelet</th>
             </tr>

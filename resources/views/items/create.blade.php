@@ -12,11 +12,11 @@
                     <form method="POST" action="{{ route('items.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="uniquename">Egyedi név</label>
+                            <label for="uniquename">Megnevezés</label>
                             <input type="text" class="form-control" id="uniquename" name="uniquename">
                         </div>
                         <div class="form-group">
-                            <label for="serialnumber">Szériaszám</label>
+                            <label for="serialnumber">Sorozatszám</label>
                             <input type="text" class="form-control" id="serialnumber" name="serialnumber">
                         </div>
                         <div class="form-group">

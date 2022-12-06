@@ -42,7 +42,7 @@ foreach ($roles as $key => $value) {
 }
 return;
 */
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/users', function () {
@@ -98,4 +98,4 @@ Auth::routes();
 
 //});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -13,11 +13,11 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="uniquename">Egyedi név</label>
+                        <label for="uniquename">Megnevezés</label>
                         <input type="text" class="form-control" id="uniquename" name="uniquename" value="{{$item->uniquename}}">
                     </div>
                     <div class="form-group">
-                        <label for="serialnumber">Szériaszám</label>
+                        <label for="serialnumber">Sorozatszám</label>
                         <input type="text" class="form-control" id="serialnumber" name="serialnumber" value="{{$item->serialnumber}}">
                     </div>
                     <div class="form-group">

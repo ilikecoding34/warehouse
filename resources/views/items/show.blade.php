@@ -19,13 +19,13 @@
                 <div class="card-body">
                     <a href="{{route('items.edit', $item)}}"><button class="btn btn-warning">Szerkesztés</button></a>
                     <div class="form-group">
-                        <label for="uniquename">Egyedi név</label>
+                        <label for="uniquename">Megnevezés</label>
                         <input type="text" class="form-control" id="uniquename" disabled name="uniquename" value="{{$item->uniquename}}">
                     </div>
                     <div class="form-group my-2">
                         <div class="row">
                             <div class="col-8">
-                                <label for="serialnumber">Szériaszám</label>
+                                <label for="serialnumber">Sorozatszám</label>
                                 <input type="text" class="form-control" id="serialnumber" disabled name="serialnumber" value="{{$item->serialnumber}}">
                                 <div class="form-group">
                                     <div class="row">
