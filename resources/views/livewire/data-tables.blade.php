@@ -1,7 +1,7 @@
 <div>
   <div class="card m-2">
       <div class="card-body">
-        Result: {{count($items)}}
+        Result: {{count($items)}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
         <table class="table">
           <thead>
             <tr>
@@ -14,6 +14,9 @@
               <th scope="col" role="button">
                 <span wire:click="sortBy('uniquename')">uniquename</span>
                 </th>
+                <th scope="col" role="button">
+                    <span wire:click="sortBy('value')">value</span>
+                </th>
               <th scope="col" role="button">
                 <span wire:click="sortBy('price')">price</span>
             </th>
@@ -22,7 +25,7 @@
           </th>
           <th scope="col" role="button">
             <span wire:click="sortBy('company')">company</span>
-       
+
         <th scope="col" role="button">
           <span wire:click="sortBy('description')">description</span>
       </th>
@@ -40,6 +43,11 @@
                   <input class="form-control" type="text" wire:model="uname">
                   </div>
                   </th>
+                  <th>
+                    <div class="col-xs-2">
+                      <input class="form-control" type="text" wire:model="value">
+                    </div>
+                </th>
                 <th>
                   <div class="col-xs-2">
                     <input class="form-control" type="text" wire:model="price">
@@ -69,6 +77,7 @@
                 <th scope="row">{{$item->id}}</th>
                 <td>{{ $item->serialnumber }}</td>
                 <td>{{ $item->uniquename }}</td>
+                <td>{{ $item->getLatestQuantity->first()->value }}</td>
                 <td>{{ $item->price }}</td>
                 <td>{{ $item->location }}</td>
                 <td>{{ $item->company }}</td>

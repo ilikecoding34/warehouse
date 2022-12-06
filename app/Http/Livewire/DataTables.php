@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Item;
+use App\Models\Quantity;
 
 class DataTables extends Component
 {
@@ -11,10 +12,13 @@ class DataTables extends Component
     public $sortedfield = 'id';
     public $serialnumber = '';
     public $uname = '';
+    public $value = '';
     public $price = '';
     public $location = '';
     public $company = '';
     public $description = '';
+    public $totalquantity = 0;
+    public $totalvalue = 0;
    // public $allfilter = [];
 
     public $direction = 'asc';
@@ -62,6 +66,11 @@ class DataTables extends Component
             $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
         }else{
             $this->items = Item::orderBy($this->sortedfield, $this->direction)->get();
+        }
+
+        foreach ($this->items as $item) {
+            $this->totalquantity += $item->getLatestQuantity->first()->value;
+            $this->totalvalue += $item->price*$item->getLatestQuantity->first()->value;
         }
 
         return view('livewire.data-tables', ['items' => $this->items])->layout('layouts.app');

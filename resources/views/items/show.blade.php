@@ -69,7 +69,7 @@
                     </div>
                     <div class="form-group">
                         <label for="type">Típus</label>
-                        <input type="text" class="form-control" id="type" disabled name="type" value="{{$item->type->name}}">
+                        <input type="text" class="form-control" id="type" disabled name="type" value="{{$item->type->name ?? 'Nincs kiválasztva'}}">
                     </div>
                     <br>
                     @if(count($item->customfields)>0)
