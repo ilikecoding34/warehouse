@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+      //php artisan db:seed --class=DatabaseSeeder
       User::factory(10)->create();
 
       for($i = 0; $i < 50; $i++){
