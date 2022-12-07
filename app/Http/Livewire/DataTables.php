@@ -19,9 +19,8 @@ class DataTables extends Component
     public $description = '';
     public $totalquantity = 0;
     public $totalvalue = 0;
-   // public $allfilter = [];
-
     public $direction = 'asc';
+
     public function mount()
     {
         $this->items = Item::all();
@@ -34,6 +33,9 @@ class DataTables extends Component
 
         $this->items = Item::orderBy($field, $this->direction)->get();
     }
+
+
+
     public function render()
     {
         $allfilter = [];
