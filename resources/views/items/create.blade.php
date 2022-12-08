@@ -43,7 +43,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <br>
+                        <br><br><br><br><br><br><br><br><br><br><br><br>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Mentés</button>
                         </div>

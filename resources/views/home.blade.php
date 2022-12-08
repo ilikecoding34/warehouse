@@ -43,10 +43,11 @@
                             </div>
                         </div>
                     </div>
-                    @endguest
+                    
                 </div>
                 @livewire('data-tables')
             </div>
+            @endguest
         </div>
     </div>
 </div>
