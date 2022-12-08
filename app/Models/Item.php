@@ -13,12 +13,22 @@ class Item extends Model
     protected $fillable = [
         'uniquename',
         'serialnumber',
-        'quantity',
         'minimumlevel',
         'price',
         'picture_id',
         'type_id'
         ];
+
+    protected $appends = ['quantity_value'];
+
+    protected static function booted()
+    {
+        /*
+        static::addGlobalScope('quantity_value', function ($query) {
+            $query->withQuantityValue();
+        });
+        */
+    }
 
     /**
      * The roles that belong to the Item
@@ -72,7 +82,21 @@ class Item extends Model
 
     public function getLatestQuantity()
     {
-        return $this->hasMany(Quantity::class)->latest();
+        return $this->hasOne(Quantity::class)->latestOfMany();
+    }
+
+    public function getQuantityValueAttribute()
+    {
+        return Quantity::where('item_id',$this->id)->latest()->first()->value ?? 0;
+    }
+
+    public function scopeWithQuantityValue($query)
+    {
+        $query->addSelect(['quantity_value' => Quantity::select('value')
+            ->whereColumn('item_id', 'items.id')
+            ->latest()
+            ->take(1)
+        ]);
     }
 
 }

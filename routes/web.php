@@ -14,6 +14,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Quantity;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,23 +46,10 @@ return;
     return view('home');
 });
 
-Route::get('/users', function () {
-    return User::all();
+Route::get('/quan', function () {
+    $qu = Quantity::where('value', '>', '30')->latest()->pluck('item_id');
+    return Item::whereIn('id', $qu)->get();
 });
-
-Route::get('/faker', function () {
-/*
-    $items = User::factory()->count(5)->make();
-    foreach ($items as $key => $value) {
-        $value->save();
-    }
-*/
-    $items = Item::factory()->count(50)->make();
-    foreach ($items as $key => $value) {
-        $value->save();
-    }
-     return;
- });
 
 Route::get('/qrcode', [QrCodeController::class, 'index']);
 

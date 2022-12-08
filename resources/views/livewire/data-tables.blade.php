@@ -15,7 +15,7 @@
                 <span wire:click="sortBy('uniquename')">Megnevezés</span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('value')">Darabszám</span>
+                <span wire:click="sortBy('quantity_value')">Darabszám</span>
               </th>
               <th scope="col" role="button">
                 <span wire:click="sortBy('price')">Ár(€)</span>
@@ -45,7 +45,7 @@
                   </th>
                   <th>
                     <div class="col-xs-2">
-                      <input class="form-control" type="text" wire:model="value">
+                      <input class="form-control" type="text" wire:model="quantity_value">
                     </div>
                 </th>
                 <th>
@@ -77,7 +77,7 @@
                 <th scope="row">{{$item->id}}</th>
                 <td>{{ $item->serialnumber }}</td>
                 <td>{{ $item->uniquename }}</td>
-                <td>{{ $item->getLatestQuantity->first()->value }}</td>
+                <td>{{ $item->quantity_value }}</td>
                 <td>{{ $item->price }}</td>
                 <td>{{ $item->location }}</td>
                 <td>{{ $item->company }}</td>

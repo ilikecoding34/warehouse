@@ -174,7 +174,7 @@ class ItemController extends Controller
      */
     public function destroy(Request $request)
     {
-        
+
         Item::find($request->id) ? Item::destroy($request->id) : Item::onlyTrashed()->find($request->id)->forceDelete();
 
         return redirect()->route('items.index');
