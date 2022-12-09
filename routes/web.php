@@ -28,27 +28,21 @@ use App\Models\Quantity;
 */
 
 Route::get('/', function () {
-   /*
-$roles = Role::all();
-
-foreach ($roles as $key => $value) {
-    echo "<strong>";
-    echo $value->name;
-    echo ":</strong> ";
-    foreach ($value->permissions as $key => $item) {
-        echo $item->name;
-        echo ", ";
-    }
-    echo "<br>";
-}
-return;
-*/
     return view('home');
 });
 
-Route::get('/quan', function () {
-    $qu = Quantity::where('value', '>', '30')->latest()->pluck('item_id');
-    return Item::whereIn('id', $qu)->get();
+Route::get('/quan/{par}', function ($par) {
+    $maxids = Quantity::groupBy('item_id')->get(DB::raw('MAX(id) as id'))->pluck('id');
+    $itemsabovevalue = Quantity::whereIn('id', $maxids)->where('value', '>', $par)->pluck('item_id');
+    $items = Item::whereIn('id', function($query) use($par){
+        $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
+            $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
+        })->where('value', '>', $par);
+    })->get();
+    return $items;
+    $items = DB::select(DB::raw('SELECT items.*, tmp.value FROM items INNER JOIN (SELECT * FROM quantities where id in (SELECT MAX(id) as id FROM `quantities` GROUP by item_id) and value > '.$par.') as tmp ON items.id=tmp.item_id'));
+
+    return $items;
 });
 
 Route::get('/qrcode', [QrCodeController::class, 'index']);

@@ -89,7 +89,7 @@ class Item extends Model
     {
         return Quantity::where('item_id',$this->id)->latest()->first()->value ?? 0;
     }
-
+/*
     public function scopeWithQuantityValue($query)
     {
         $query->addSelect(['quantity_value' => Quantity::select('value')
@@ -97,6 +97,6 @@ class Item extends Model
             ->latest()
             ->take(1)
         ]);
-    }
+    }*/
 
 }
