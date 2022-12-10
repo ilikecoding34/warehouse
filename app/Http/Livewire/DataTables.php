@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Item;
 use App\Models\Quantity;
+use DB;
 
 class DataTables extends Component
 {
@@ -13,7 +14,7 @@ class DataTables extends Component
     public $serialnumber, $uname, $price, $location, $company, $description = '';
     public $totalquantity, $totalvalue = 0;
     public $direction = 'asc';
-    public $quantity_value = '20';
+    public $quantity_value = '';
 
     public function mount()
     {
@@ -24,8 +25,7 @@ class DataTables extends Component
     {
         $this->sortedfield == $field ? $this->direction = $this->direction == 'asc' ? 'desc' : 'asc' : $this->direction = 'desc';
         $this->sortedfield = $field;
-
-        $this->items = Item::orderBy($field, $this->direction)->get();
+        $this->searchInTable();
     }
 
     public function orderBy($field)
@@ -51,7 +51,6 @@ class DataTables extends Component
         $columns = [
             'serialnumber' => $this->serialnumber,
             'uniquename' => $this->uname,
-            'quantity_value' => $this->quantity_value,
             'price' => $this->price,
             'location' => $this->location,
             'company' => $this->company,
@@ -60,18 +59,25 @@ class DataTables extends Component
 
         $allfilter = $this->addWhereClosure($columns);
 
-        if(count($allfilter)>0){
-        //    $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
+        if($this->quantity_value != ''){
+            $par = $this->quantity_value;
+            $this->items = Item::whereIn('id', function($query) use($par){
+                $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
+                    $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
+                })->where('value', '>', $par);
+            })->where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
+
         }else{
-        //    $this->items = Item::orderBy($this->sortedfield, $this->direction)->get();
+            if(count($allfilter)>0){
+                $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
+            }else{
+                $this->items = Item::orderBy($this->sortedfield, $this->direction)->get();
+            }
         }
     }
 
     public function render()
     {
-
-
-        $this->searchInTable();
 
         $this->totalquantity = 0;
         $this->totalvalue = 0;
@@ -80,9 +86,6 @@ class DataTables extends Component
             $this->totalquantity += $item->quantity_value;
             $this->totalvalue += $item->price*$item->quantity_value;
         }
-
-         $qu = Quantity::where('value', '>', $this->quantity_value)->latest()->pluck('item_id');
-         $this->items = Item::whereIn('id', $qu)->get();
 
         return view('livewire.data-tables', ['items' => $this->items])->layout('layouts.app');
     }

@@ -15,7 +15,7 @@
                 <span wire:click="sortBy('uniquename')">Megnevezés</span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('quantity_value')">Darabszám</span>
+                <span wire:click="orderBy('quantity_value')">Darabszám</span>
               </th>
               <th scope="col" role="button">
                 <span wire:click="sortBy('price')">Ár(€)</span>
@@ -35,37 +35,37 @@
                 <th></th>
                 <th>
                   <div class="col-xs-3">
-                  <input class="form-control" type="text" wire:model="serialnumber">
+                  <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="serialnumber">
                   </div>
                 </th>
                 <th>
                   <div class="col-xs-3">
-                  <input class="form-control" type="text" wire:model="uname">
+                  <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="uname">
                   </div>
                   </th>
                   <th>
                     <div class="col-xs-2">
-                      <input class="form-control" type="text" wire:model="quantity_value">
+                      <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="quantity_value">
                     </div>
                 </th>
                 <th>
                   <div class="col-xs-2">
-                    <input class="form-control" type="text" wire:model="price">
+                    <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="price">
                   </div>
               </th>
               <th>
                 <div class="col-xs-2">
-                  <input class="form-control" type="text" wire:model="location">
+                  <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="location">
                 </div>
             </th>
             <th>
               <div class="col-xs-2">
-                <input class="form-control" type="text" wire:model="company">
+                <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="company">
               </div>
           </th>
           <th>
             <div class="col-xs-2">
-              <input class="form-control" type="text" wire:model="description">
+              <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="description">
             </div>
         </th>
                 <th></th>

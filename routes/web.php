@@ -31,25 +31,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/quan/{par}', function ($par) {
-    $maxids = Quantity::groupBy('item_id')->get(DB::raw('MAX(id) as id'))->pluck('id');
-    $itemsabovevalue = Quantity::whereIn('id', $maxids)->where('value', '>', $par)->pluck('item_id');
-    $items = Item::whereIn('id', function($query) use($par){
-        $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
-            $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
-        })->where('value', '>', $par);
-    })->get();
-    return $items;
-    $items = DB::select(DB::raw('SELECT items.*, tmp.value FROM items INNER JOIN (SELECT * FROM quantities where id in (SELECT MAX(id) as id FROM `quantities` GROUP by item_id) and value > '.$par.') as tmp ON items.id=tmp.item_id'));
-
-    return $items;
-});
-
 Route::get('/qrcode', [QrCodeController::class, 'index']);
 
 Auth::routes();
 
-//Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::resource('items', ItemController::class);
     Route::resource('pictures', PictureController::class);
     Route::resource('types', TypeController::class);
@@ -78,6 +64,6 @@ Auth::routes();
 
     Route::get('/customfields/restore/{id}', [CustomfieldController::class, 'restore'])->name('customfields.restore');
 
-//});
+});
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
