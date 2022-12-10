@@ -21,7 +21,6 @@ class CreateItemsTable extends Migration
             $table->string('company');
             $table->string('location');
             $table->float('price');
-            $table->unsignedBigInteger('picture_id')->nullable();
             $table->string('description');
             $table->unsignedBigInteger('type_id');
             $table->softDeletes();

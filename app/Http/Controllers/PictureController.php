@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Picture;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class PictureController extends Controller
@@ -92,7 +93,7 @@ class PictureController extends Controller
             $filePath = $request->file('file')->storeAs('uploads/pictures', $fileName, 'public');
             $picture->file_path = '/storage/' . $filePath;
         }
-        
+
         $picture->name = $request->name;
         $picture->name_en = $request->name_en;
 
@@ -126,5 +127,30 @@ class PictureController extends Controller
     {
         Picture::withTrashed()->find($id)->restore();
 	    return redirect()->route('pictures.index');
+    }
+
+    public function storetoitem(Request $request, $id)
+    {
+        $request->validate([
+            'file' => 'required|mimes:jpg,jpeg,png|max:102048'
+        ]);
+
+        if($request->file()) {
+            $picture = new Picture;
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads/pictures/$id', $fileName, 'public');
+            $picture->name = $request->name ?? $fileName;
+            $picture->name_en = $request->name_en ?? $fileName;
+            $picture->file_path = '/storage/' . $filePath;
+            $picture->save();
+
+            $item = Item::find($id);
+            $item->picture_id = $picture->id;
+            $item->save();
+        }
+
+
+
+        return redirect()->route('items.edit', $item);
     }
 }

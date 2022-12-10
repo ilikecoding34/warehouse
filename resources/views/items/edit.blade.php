@@ -71,18 +71,9 @@
                     </div>
                     <div class="form-group">
                         <label for="picture_select">Kép:</label>
-                        <select class="select text-wrap form-control" style="border: 1px solid" id="picture_select" name="picture_select" class="form-control">
-                            <option value=""></option>
-                            @foreach ($pictures as $pic)
-                                <option value="{{$pic->id}}"
-                                    @if ($pic->id == $item->picture_id)
-                                        selected
-                                    @endif
-                                    >
-                                    {{$pic->name}}
-                                </option>
-                            @endforeach
-                        </select>
+                        @foreach ($item->pictures as $pic)
+                            <img src="{{asset($pic->file_path)}}" width="128" height="128">
+                        @endforeach
                     </div>
                     <br>
                         <div class="form-group">
@@ -116,6 +107,20 @@
                     <br>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">Hozzáad</button>
+                        </div>
+                    </form>
+
+                    <form method="POST" action="{{ route('pictures.storetoitem', $item->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="custom-file">
+                            <input type="file" name="file" class="custom-file-input" id="chooseFile">
+                            <label class="custom-file-label" for="chooseFile">Fájl kiválasztása</label>
+                        </div>
+                        <br>
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="btn btn-primary">Mentés</button>
+                            </div>
                         </div>
                     </form>
                 </div>

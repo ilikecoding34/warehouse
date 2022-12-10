@@ -21,6 +21,7 @@ First steps
 - php artisan db:seed --class=RolesAndPermissionsSeeder
 - php artisan serve
 - open url: localhost:8000
+- admin login: email: admin@gmail.com, password: 123456
 
 ## About Laravel
 

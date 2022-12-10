@@ -146,7 +146,7 @@ class ItemController extends Controller
             $i++;
         }
 
-        if($item->getLatestQuantity->isEmpty() || $request->quantity != $item->getLatestQuantity->first()->value){
+        if($item->getLatestQuantity == null || $request->quantity != $item->quantity_value){
             $quantity = new Quantity();
 
             $quantity->item_id = $item->id;

@@ -50,6 +50,10 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/pictures/restore/{id}', [PictureController::class, 'restore'])->name('pictures.restore');
 
+    Route::post('/pictures/storetoitem/{id}', [PictureController::class, 'storetoitem'])->name('pictures.storetoitem');
+
+
+
     Route::post('/additemtype/{item}', [ItemController::class, 'addtype'])->name('items.addtype');
 
     Route::get('/items/{id}/modal', [ItemController::class, 'modal'])->name('items.modal');

@@ -25,7 +25,6 @@
                               <th scope="col">Darabszám</th>
                               <th scope="col">Minimum</th>
                               <th scope="col">Ár(€)</th>
-                              <th scope="col">Kép</th>
                               <th scope="col">Művelet</th>
                             </tr>
                           </thead>
@@ -39,9 +38,7 @@
                         </td>
                         <td>
                             <div>
-                                @if (count($item->quantity) > 0)
-                                {{$item->getLatestQuantity->first()->value}}
-                                @endif
+                                {{$item->quantity_value}}
                             </div>
                         </td>
                         <td>
@@ -49,11 +46,6 @@
                         </td>
                         <td>
                             <div>{{$item->price}}</div>
-                        </td>
-                        <td>
-                            @if(isset($item->picture_id))
-                                <img src="{{asset($item->picture->file_path)}}" width="128" height="128">
-                            @endif
                         </td>
                         <td>
                             <div>

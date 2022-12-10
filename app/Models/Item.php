@@ -45,16 +45,6 @@ class Item extends Model
         return $this->belongsToMany(Type::class, 'item_type');
     }
 
-    /**
-     * Get the picture that owns the Item
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function picture()
-    {
-        return $this->belongsTo(Picture::class, 'picture_id');
-    }
-
     public function quantity()
     {
         return $this->hasMany(Quantity::class);
@@ -68,6 +58,16 @@ class Item extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'item_categories');
+    }
+
+    /**
+     * The pictures that belong to the Item
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pictures()
+    {
+        return $this->belongsToMany(Picture::class);
     }
 
     /**
