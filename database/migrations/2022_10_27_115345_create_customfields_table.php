@@ -21,7 +21,7 @@ class CreateCustomfieldsTable extends Migration
 
         });
 
-        Schema::create('item_customfields', function (Blueprint $table) {
+        Schema::create('customfield_item', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('customfield_id');

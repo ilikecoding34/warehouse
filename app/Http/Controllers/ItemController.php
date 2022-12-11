@@ -33,7 +33,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::with('picture', 'quantity')->get();
+        $items = Item::with('pictures', 'quantity')->get();
         $trashed = Item::onlyTrashed()->get();
 
         $totalquantity = 0;

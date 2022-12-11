@@ -37,12 +37,7 @@ class Item extends Model
      */
     public function customfields()
     {
-        return $this->belongsToMany(Customfield::class, 'item_customfields')->withPivot('id', 'value')->withTimeStamps();
-    }
-
-    public function getUsedCustomfieldIds()
-    {
-        return $this->belongsToMany(Type::class, 'item_type');
+        return $this->belongsToMany(Customfield::class)->withPivot('id', 'value')->withTimeStamps();
     }
 
     public function quantity()
@@ -57,7 +52,7 @@ class Item extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'item_categories');
+        return $this->belongsToMany(Category::class);
     }
 
     /**
