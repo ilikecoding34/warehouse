@@ -16,6 +16,12 @@
               </th>
               <th scope="col" role="button">
                 <span wire:click="orderBy('quantity_value')">Darabszám</span>
+                <select name="relation" id="relation" wire:model="relation" wire:change="searchInTable">
+                    <option value="0">*</option>
+                    <option value="1">></option>
+                    <option value="2"><</option>
+                    <option value="3">=</option>
+                </select>
               </th>
               <th scope="col" role="button">
                 <span wire:click="sortBy('price')">Ár(€)</span>

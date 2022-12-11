@@ -12,7 +12,7 @@ class DataTables extends Component
     public $items;
     public $sortedfield = 'id';
     public $serialnumber, $uname, $price, $location, $company, $description = '';
-    public $totalquantity, $totalvalue = 0;
+    public $totalquantity, $totalvalue, $relation = 0;
     public $direction = 'asc';
     public $quantity_value = '';
 
@@ -60,11 +60,42 @@ class DataTables extends Component
         $allfilter = $this->addWhereClosure($columns);
 
         if($this->quantity_value != ''){
+            $rel = '';
             $par = $this->quantity_value;
-            $this->items = Item::whereIn('id', function($query) use($par){
+            switch ($this->relation) {
+                case 0:
+                    $rel = 'Like';
+                    if(!str_contains($par, '%')){
+                        $par = $par.'%';
+                    }
+                    break;
+                case 1:
+                    $rel = '>';
+                    if(str_contains($par, '%')){
+                        $par = substr($par, 0, -1);
+                    }
+                    break;
+                case 2:
+                    $rel = '<';
+                    if(str_contains($par, '%')){
+                        $par = substr($par, 0, -1);
+                    }
+                    break;
+                case 3:
+                    $rel = '=';
+                    if(str_contains($par, '%')){
+                        $par = substr($par, 0, -1);
+                    }
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            $this->items = Item::whereIn('id', function($query) use($par, $rel){
                 $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
                     $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
-                })->where('value', '>', $par);
+                })->where('value', $rel, $par);
             })->where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
 
         }else{
