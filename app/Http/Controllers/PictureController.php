@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Picture;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Storage;
 
 class PictureController extends Controller
 {
@@ -132,24 +133,62 @@ class PictureController extends Controller
     public function storetoitem(Request $request, $id)
     {
         $request->validate([
-            'file' => 'required|mimes:jpg,jpeg,png|max:102048'
+            'files' => 'required',
+            'files.*' => 'required|mimes:jpg,jpeg,png,pdf,xlx,csv|max:102048',
         ]);
 
-        if($request->file()) {
-            $picture = new Picture;
-            $fileName = time().'_'.$request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads/pictures/$id', $fileName, 'public');
-            $picture->name = $request->name ?? $fileName;
-            $picture->name_en = $request->name_en ?? $fileName;
-            $picture->file_path = '/storage/' . $filePath;
-            $picture->save();
+        $files = [];
+        if ($request->file('files')){
+            foreach($request->file('files') as $key => $file)
+            {
+                $picture = new Picture;
+                $fileName = time().'_'.$file->getClientOriginalName();
+                $filePath = $file->storeAs('uploads/pictures/'.$id, $fileName, 'public');
+                $picture->name = $fileName;
+                $picture->name_en = $fileName;
+                $picture->file_path = '/storage/' . $filePath;
+                $picture->save();
 
-            $item = Item::find($id);
-            $item->picture_id = $picture->id;
-            $item->save();
+                $item = Item::find($id);
+                $item->pictures()->attach($picture->id);
+            }
         }
 
+        return redirect()->route('items.edit', $item);
+    }
 
+    public function deletefromitem(Request $request)
+    {
+        $item = Item::find($request->item_id);
+        $item->pictures()->detach($request->pic_id);
+
+        return redirect()->route('items.edit', $item);
+    }
+
+    public function webcamstore(Request $request)
+    {
+        $id = $request->item_id;
+        $img = $request->image;
+        $folderPath = 'uploads/pictures/'.$id.'/';
+
+        $image_parts = explode(";base64,", $img);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName = uniqid() . '.png';
+
+        $file = 'public/'.$folderPath . $fileName;
+        Storage::put($file, $image_base64);
+
+        $picture = new Picture;
+        $picture->name = $fileName;
+        $picture->name_en = $fileName;
+        $picture->file_path = '/storage/' . $folderPath . $fileName;
+        $picture->save();
+
+        $item = Item::find($id);
+        $item->pictures()->attach($picture->id);
 
         return redirect()->route('items.edit', $item);
     }

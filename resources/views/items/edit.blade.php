@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -69,18 +70,49 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="picture_select">Kép:</label>
-                        @foreach ($item->pictures as $pic)
-                            <img src="{{asset($pic->file_path)}}" width="128" height="128">
-                        @endforeach
-                    </div>
+
                     <br>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">Frissítés</button>
                         </div>
                     </form>
-
+                    <hr>
+                    <div class="form-group">
+                        <label for="picture_select">Kép:</label>
+                        <div class="row">
+                        @foreach ($item->pictures as $pic)
+                        <div class="col">
+                            <img src="{{asset($pic->file_path)}}" width="128" >
+                            <form method="POST" class="btn" action="{{route('pictures.deletefromitem') }}" >
+                                @csrf
+                                <input id="id" name="item_id" hidden value="{{$item->id}}">
+                                <input id="id" name="pic_id" hidden value="{{$pic->id}}">
+                                <button class="btn btn-danger" type="submit">Törlés</button>
+                            </form>
+                        </div>
+                        @endforeach
+                        </div>
+                    </div>
+                    <div class="container">
+                        <form method="POST" action="{{ route('webcam.capture') }}">
+                            @csrf
+                                <div class="col-md-10">
+                                    <div id="my_camera"></div>
+                                    <br/>
+                                    <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                    <input type="hidden" name="image" class="image-tag">
+                                    <input type="hidden" name="item_id" value="{{$item->id}}">
+                                </div>
+                                <div class="col-md-10">
+                                    <div id="results">Your captured image will appear here...</div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <br/>
+                                    <button class="btn btn-success">Submit</button>
+                                </div>
+                        </form>
+                    </div>
+                    <hr>
                 <form method="POST" action="{{ route('items.addtype', $item->id) }}">
                     @csrf
                     @method('POST')
@@ -109,11 +141,11 @@
                             <button type="submit" class="btn btn-success">Hozzáad</button>
                         </div>
                     </form>
-
+                    <hr>
                     <form method="POST" action="{{ route('pictures.storetoitem', $item->id) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="custom-file">
-                            <input type="file" name="file" class="custom-file-input" id="chooseFile">
+                            <input type="file" name="files[]" class="custom-file-input" id="chooseFile" multiple>
                             <label class="custom-file-label" for="chooseFile">Fájl kiválasztása</label>
                         </div>
                         <br>
@@ -128,4 +160,23 @@
         </div>
     </div>
 </div>
+
+<script language="JavaScript">
+    Webcam.set({
+        width: 490,
+        height: 350,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+
+    Webcam.attach( '#my_camera' );
+
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+</script>
+
 @endsection

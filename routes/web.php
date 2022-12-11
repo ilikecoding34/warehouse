@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Quantity;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,10 @@ use App\Models\Quantity;
 
 Route::get('/', function () {
     return view('home');
+});
+
+Route::get('/webcam', function () {
+    return view('webcam');
 });
 
 Route::get('/qrcode', [QrCodeController::class, 'index']);
@@ -52,7 +57,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('/pictures/storetoitem/{id}', [PictureController::class, 'storetoitem'])->name('pictures.storetoitem');
 
+    Route::post('/pictures/deletefromitem', [PictureController::class, 'deletefromitem'])->name('pictures.deletefromitem');
 
+    Route::post('/webcamstore', [PictureController::class, 'webcamstore'])->name('webcam.capture');
 
     Route::post('/additemtype/{item}', [ItemController::class, 'addtype'])->name('items.addtype');
 
