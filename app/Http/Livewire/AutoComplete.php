@@ -3,20 +3,21 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Type;
+use App\Models\Category;
 use Str;
 
 class AutoComplete extends Component
 {
 
-    public $types;
+    public $categories;
     public $listvisible = false;
     public $multiplelistvisible = false;
-    public $typename, $typesearchname = '';
+    public $categoryname, $categorysearchname = '';
 
-    public $typemultiplename = [];
-    public $typearray = [];
-    public $typeselected = [];
+    public $categorymultiplename = [];
+    public $categoryarray = [];
+    public $categoryselected = [];
+    public $categorysingleselected = '';
 
     public $inputlength = 0;
 
@@ -24,42 +25,42 @@ class AutoComplete extends Component
 
     public function mount()
     {
-        $this->types = Type::all();
+        $this->categories = Category::all();
     }
-    public function typeSelected($typename)
+    public function categoryselected($categoryname)
     {
-        $this->typename = $typename;
+        $this->categorysingleselected = $categoryname;
     }
 
-    public function typeMultiSelect($typename)
+    public function categoryMultiSelect($categoryname)
     {
-        array_push($this->typemultiplename, $typename);
-        $this->typeselected = [];
-        foreach ($this->typemultiplename as $key => $value) {
-            array_push($this->typeselected, ['name', '<>', $value]);
+        array_push($this->categorymultiplename, $categoryname);
+        $this->categoryselected = [];
+        foreach ($this->categorymultiplename as $key => $value) {
+            array_push($this->categoryselected, ['name', '<>', $value]);
         }
     }
 
     public function showhidelist()
     {
         $this->multilistshow = false;
-        $this->inputlength = Str::length($this->typesearchname);
+        $this->inputlength = Str::length($this->categorysearchname);
     }
 
     public function render()
     {
-        if(Str::length($this->typename) > 2 && count($this->types) > 1){
+        if(Str::length($this->categoryname) > 2 && count($this->categories) > 1){
             $this->listvisible = true;
-            $this->types = Type::where('name', 'like', $this->typename.'%')->get();
+            $this->categories = Category::where('name', 'like', $this->categoryname.'%')->get();
         }else{
             $this->listvisible = false;
         }
 
-        if($this->inputlength != Str::length($this->typesearchname)){
+        if($this->inputlength != Str::length($this->categorysearchname)){
             $this->multilistshow = true;
         }
 
-        if(Str::length($this->typesearchname) > 2 && count($this->types) > 0){
+        if(Str::length($this->categorysearchname) > 2 && count($this->categories) > 0){
 
             if($this->multilistshow){
                 $this->multiplelistvisible = true;
@@ -67,16 +68,16 @@ class AutoComplete extends Component
                 $this->multiplelistvisible = false;
             }
 
-            if(count($this->typeselected)>0){
-                $this->types = Type::where('name', 'like', $this->typesearchname.'%')->where($this->typeselected)->get();
+            if(count($this->categoryselected)>0){
+                $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->where($this->categoryselected)->get();
             }else{
-                $this->types = Type::where('name', 'like', $this->typesearchname.'%')->get();
+                $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->get();
             }
-            
+
         }else{
             $this->multiplelistvisible = false;
         }
-        
+
         return view('livewire.auto-complete');
     }
 }
