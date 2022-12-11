@@ -16,10 +16,16 @@ class CreateItemQuantityTable extends Migration
         Schema::create('quantities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('value');
             $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')->references('id')->on('users')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

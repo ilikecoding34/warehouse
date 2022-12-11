@@ -14,7 +14,8 @@ class QuantityFactory extends Factory
     public function definition()
     {
         return [
-            'value' => $this->faker->numberBetween(10,50),
+            'user_id' => $this->faker->numberBetween(1,10),
+            'value' => $this->faker->numberBetween(1,20),
         ];
     }
 }
