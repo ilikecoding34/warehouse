@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="quantity">Mennyiség</label>
-                        <input type="text" class="form-control" id="quantity" name="quantity" value="@if (count($item->quantity) > 0){{$item->getLatestQuantity->first()->value}}@endif">
+                        <input type="text" class="form-control" id="quantity" name="quantity" value="{{$item->quantity_value}}">
                     </div>
                     <div class="form-group">
                         <label for="minimumlevel">Minumum mennyiség:</label>
@@ -44,6 +44,9 @@
                     <div class="form-group">
                         <label for="company">Gyártó</label>
                         <input type="text" class="form-control" id="company" name="company" value="{{$item->company}}">
+                    </div>
+                    <div class="form-group">
+                        @livewire('auto-complete')
                     </div>
                     @foreach ($item->customfields as $customfield)
                         <div class="form-group
@@ -77,6 +80,36 @@
                         </div>
                     </form>
                     <hr>
+                    <h3>Egyedi mezők</h3>
+                    <form method="POST" action="{{ route('items.addtype', $item->id) }}">
+                        @csrf
+                        @method('POST')
+                        @foreach ($item->customfields as $customfield)
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{$customfield->id}}" id="defaultCheck1" checked name="customfields[]">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                    {{$customfield->name}}
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                        @foreach ($unckeckedtypes as $unckeckedtype)
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="{{$unckeckedtype->id}}" id="defaultCheck1" name="customfields[]">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                    {{$unckeckedtype->name}}
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                        <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Hozzáad</button>
+                            </div>
+                        </form>
+                        <hr>
                     <div class="form-group">
                         <label for="picture_select">Kép:</label>
                         <div class="row">
@@ -87,61 +120,31 @@
                                 @csrf
                                 <input id="id" name="item_id" hidden value="{{$item->id}}">
                                 <input id="id" name="pic_id" hidden value="{{$pic->id}}">
-                                <button class="btn btn-danger" type="submit">Törlés</button>
+                                <button class="btn btn-warning" type="submit">Törlés</button>
                             </form>
                         </div>
                         @endforeach
                         </div>
                     </div>
                     <div class="container">
+                        <h3>Webkamera kép</h3>
                         <form method="POST" action="{{ route('webcam.capture') }}">
                             @csrf
                                 <div class="col-md-10">
                                     <div id="my_camera"></div>
                                     <br/>
-                                    <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                                    <input type=button value="Kép készítés" onClick="take_snapshot()">
                                     <input type="hidden" name="image" class="image-tag">
                                     <input type="hidden" name="item_id" value="{{$item->id}}">
                                 </div>
                                 <div class="col-md-10">
-                                    <div id="results">Your captured image will appear here...</div>
+                                    <div id="results">Webcam képe itt fog megjelenni</div>
                                 </div>
-                                <div class="col-md-12 text-center">
-                                    <br/>
-                                    <button class="btn btn-success">Submit</button>
-                                </div>
+                                <button class="btn btn-success">Feltöltés</button>
                         </form>
                     </div>
                     <hr>
-                <form method="POST" action="{{ route('items.addtype', $item->id) }}">
-                    @csrf
-                    @method('POST')
-                    @foreach ($item->customfields as $customfield)
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$customfield->id}}" id="defaultCheck1" checked name="customfields[]">
-                                <label class="form-check-label" for="defaultCheck1">
-                                {{$customfield->name}}
-                                </label>
-                            </div>
-                        </div>
-                    @endforeach
-                    @foreach ($unckeckedtypes as $unckeckedtype)
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{$unckeckedtype->id}}" id="defaultCheck1" name="customfields[]">
-                                <label class="form-check-label" for="defaultCheck1">
-                                {{$unckeckedtype->name}}
-                                </label>
-                            </div>
-                        </div>
-                    @endforeach
-                    <br>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success">Hozzáad</button>
-                        </div>
-                    </form>
-                    <hr>
+                    <h3>Meghajtóról kép</h3>
                     <form method="POST" action="{{ route('pictures.storetoitem', $item->id) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="custom-file">
@@ -151,7 +154,7 @@
                         <br>
                         <div class="field">
                             <div class="control">
-                                <button type="submit" class="btn btn-primary">Mentés</button>
+                                <button type="submit" class="btn btn-success">Feltöltés</button>
                             </div>
                         </div>
                     </form>

@@ -100,15 +100,20 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         $units = [];
+        $unitsdiff = [];
         $dates = [];
         if(count($item->quantity)>0){
+            array_push($unitsdiff, 0);
+            for ($i=1; $i < count($item->quantity); $i++) {
+                array_push($unitsdiff, $item->quantity[$i]->value - $item->quantity[$i-1]->value);
+            }
             foreach ($item->quantity as $quantity) {
                 array_push($units, $quantity->value);
                 array_push($dates, '"'.$quantity->created_at->format('Y-m-d').'"');
             }
         }
 
-        return view('items.show', compact('item', 'units', 'dates'));
+        return view('items.show', compact('item', 'units', 'unitsdiff', 'dates'));
     }
 
     /**
@@ -150,6 +155,7 @@ class ItemController extends Controller
             $quantity = new Quantity();
 
             $quantity->item_id = $item->id;
+            $quantity->user_id = auth()->user()->id;
             $quantity->value = $request->quantity;
 
             $quantity->save();

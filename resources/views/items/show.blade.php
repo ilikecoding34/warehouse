@@ -91,18 +91,21 @@
                 <div style="width: 600px; margin: auto;">
                     <canvas id="myChart"></canvas>
                 </div>
+                <div class="m-2">
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Változások összesen: {{count($item->quantity)}}
                 </button>
+
                 <div class="collapse" id="collapseExample">
                     <div>
                         @if (count($item->quantity)>0)
                         @foreach ($item->quantity as $quantity)
-                            Jelenlegi mennyiség: {{$quantity->value}} - {{$quantity->created_at}}
+                            Jelenlegi mennyiség: {{$quantity->value}} - {{$quantity->user->name}} - {{$quantity->created_at}}
                             <br>
                         @endforeach
                         @endif
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -115,9 +118,9 @@
         data: {
             labels: [{!!implode(', ', $dates)!!}],
             datasets: [{
-                label: ' units',
+                label: ' unitsdiff',
                 type: 'bar',
-                data: [{{implode(', ', $units)}}],
+                data: [{{implode(', ', $unitsdiff)}}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

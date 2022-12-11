@@ -41,7 +41,7 @@ class Item extends Model
 
     public function quantity()
     {
-        return $this->hasMany(Quantity::class)->withTimeStamps();
+        return $this->hasMany(Quantity::class);
     }
 
     /**
@@ -51,7 +51,7 @@ class Item extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class)->withTimeStamps();
+        return $this->belongsToMany(Category::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class Item extends Model
      */
     public function pictures()
     {
-        return $this->belongsToMany(Picture::class)->withTimeStamps();
+        return $this->belongsToMany(Picture::class);
     }
 
     /**
