@@ -109,9 +109,9 @@ class PictureController extends Controller
      * @param  \App\Models\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Picture $picture)
+    public function destroy($id)
     {
-        Picture::find($picture->id) ? Picture::destroy($picture->id) : Picture::onlyTrashed()->find($picture->id)->forceDelete();
+        Picture::find($id) ? Picture::destroy($id) : Picture::onlyTrashed()->find($id)->forceDelete();
 
         return redirect()->route('pictures.index');
     }

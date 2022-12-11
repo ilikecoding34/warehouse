@@ -15,7 +15,6 @@ class Item extends Model
         'serialnumber',
         'minimumlevel',
         'price',
-        'picture_id',
         'type_id'
         ];
 
@@ -42,7 +41,7 @@ class Item extends Model
 
     public function quantity()
     {
-        return $this->hasMany(Quantity::class);
+        return $this->hasMany(Quantity::class)->withTimeStamps();
     }
 
     /**
@@ -52,7 +51,7 @@ class Item extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withTimeStamps();
     }
 
     /**
@@ -62,7 +61,7 @@ class Item extends Model
      */
     public function pictures()
     {
-        return $this->belongsToMany(Picture::class);
+        return $this->belongsToMany(Picture::class)->withTimeStamps();
     }
 
     /**

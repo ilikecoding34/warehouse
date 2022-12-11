@@ -25,7 +25,7 @@
                     <td class="text-center">
                         <a href="{{ route('pictures.show', $item) }}"><button class="btn btn-primary" type="submit">Megtekint</button></a>
                         <a href="{{ route('pictures.edit', $item) }}"><button class="btn btn-warning" type="submit">Szerkesztés</button></a>
-                        <a class="btn btn-danger waves-effect waves-light remove-record" data-bs-toggle="modal" data-url="{{route('pictures.destroy', $item)}}" data-id="{{$item->id}}" data-bs-target="#custom-width-modal">Törlés</a>
+                        <a class="btn btn-danger waves-effect waves-light remove-record" data-bs-toggle="modal" data-url="{{route('pictures.destroy', $item->id)}}" data-id="{{$item->id}}" data-bs-target="#custom-width-modal">Törlés</a>
                     </td>
                 </tr>
                 @endforeach
@@ -48,7 +48,7 @@
                             <td class="text-center">
                                 <div class="btn-group">
                                     <a class="btn" href="{{ route('pictures.restore', $item->id ) }}"><button class="btn btn-primary" type="submit">Visszaállítás</button></a>
-                                    <form method="POST" class="btn" action="{{route('pictures.destroy', $item) }}" >
+                                    <form method="POST" class="btn" action="{{route('pictures.destroy', $item->id) }}" >
                                         @method('DELETE')
                                         @csrf
                                         <button class="btn btn-danger" type="submit">Törlés</button>
