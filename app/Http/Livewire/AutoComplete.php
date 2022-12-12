@@ -19,10 +19,6 @@ class AutoComplete extends Component
     public $categoryselected = [];
     public $categorysingleselected = '';
 
-    public $inputlength = 0;
-
-    public $multilistshow = true;
-
     public function mount()
     {
         $this->categories = Category::all();
@@ -43,41 +39,39 @@ class AutoComplete extends Component
 
     public function showhidelist()
     {
-        $this->multilistshow = false;
-        $this->inputlength = Str::length($this->categorysearchname);
+        $this->multiplelistvisible = false;
+        $this->listvisible = false;
+    }
+
+    public function searchInTable($single)
+    {
+        if($single){
+            if(Str::length($this->categoryname) > 2 && count($this->categories) > 1){
+                $this->listvisible = true;
+                $this->categories = Category::where('name', 'like', $this->categoryname.'%')->get();
+            }else{
+                $this->listvisible = false;
+            }
+        }else{
+            if(Str::length($this->categorysearchname) > 2 && count($this->categories) > 0){
+
+                $this->multiplelistvisible = true;
+    
+                if(count($this->categoryselected)>0){
+                    dd(Category::where('name', 'like', $this->categorysearchname.'%')->where($this->categoryselected)->toSql());
+                    $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->where($this->categoryselected)->get();
+                }else{
+                    $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->get();
+                }
+            }else{
+                $this->multiplelistvisible = false;
+            }
+        }
     }
 
     public function render()
     {
-        if(Str::length($this->categoryname) > 2 && count($this->categories) > 1){
-            $this->listvisible = true;
-            $this->categories = Category::where('name', 'like', $this->categoryname.'%')->get();
-        }else{
-            $this->listvisible = false;
-        }
-
-        if($this->inputlength != Str::length($this->categorysearchname)){
-            $this->multilistshow = true;
-        }
-
-        if(Str::length($this->categorysearchname) > 2 && count($this->categories) > 0){
-
-            if($this->multilistshow){
-                $this->multiplelistvisible = true;
-            }else{
-                $this->multiplelistvisible = false;
-            }
-
-            if(count($this->categoryselected)>0){
-                $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->where($this->categoryselected)->get();
-            }else{
-                $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->get();
-            }
-
-        }else{
-            $this->multiplelistvisible = false;
-        }
-
+        
         return view('livewire.auto-complete');
     }
 }
