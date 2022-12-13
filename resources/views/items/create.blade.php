@@ -31,6 +31,17 @@
                             <label for="price">Ár</label>
                             <input type="text" class="form-control" id="price" name="price">
                         </div>
+                        <div class="form-group">
+                            <label for="company">Gyártó</label>
+                            <select class="select text-wrap form-control" style="border: 1px solid" id="company_select" name="company_select" class="form-control">
+                                <option value=""></option>
+                                @foreach ($companies as $company)
+                                    <option value="{{$company->id}}">
+                                        {{$company->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         @livewire('auto-complete')
                         <div class="form-group">
                             <label for="picture_select">Kép kiválasztás:</label>

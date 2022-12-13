@@ -20,7 +20,7 @@ class ItemFactory extends Factory
             'serialnumber' => $this->faker->unique()->numberBetween(10,20000),
             'minimumlevel' => $this->faker->numberBetween(10,50),
             'price' => $this->faker->numberBetween(1,200),
-            'company_id' => Company::factory(),
+            'company_id' => $this->faker->numberBetween(1,12),
             'location' => $this->faker->word(),
             'type_id' => Type::factory(),
             'description' => $this->faker->sentence(),

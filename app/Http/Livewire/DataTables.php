@@ -18,7 +18,7 @@ class DataTables extends Component
 
     public function mount()
     {
-        $this->items = Item::all();
+        $this->items = Item::with('pictures', 'quantity', 'company')->get();
     }
 
     public function sortBy($field)
@@ -96,13 +96,13 @@ class DataTables extends Component
                 $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
                     $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
                 })->where('value', $rel, $par);
-            })->where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
+            })->where($allfilter)->orderBy($this->sortedfield, $this->direction)->with('pictures', 'quantity', 'company')->get();
 
         }else{
             if(count($allfilter)>0){
-                $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->get();
+                $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->with('pictures', 'quantity', 'company')->get();
             }else{
-                $this->items = Item::orderBy($this->sortedfield, $this->direction)->get();
+                $this->items = Item::orderBy($this->sortedfield, $this->direction)->with('pictures', 'quantity', 'company')->get();
             }
         }
     }

@@ -65,7 +65,11 @@
                     </div>
                     <div class="form-group">
                         <label for="company">Gyártó</label>
-                        <input type="text" class="form-control" id="company" disabled name="company" value="{{$item->company}}">
+                        @if (isset($item->company))
+                            <input type="text" class="form-control" id="company" disabled name="company" value="{{$item->company->name}}">
+                        @else
+                            <span class="fw-bold bg-warning">Törölt gyártó</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="type">Típus</label>
@@ -81,10 +85,15 @@
                     @endforeach
                     @endif
                     <br>
-                    <div class="col">
-                        @if(isset($item->picture_id))
-                            <img src="{{asset($item->picture->file_path)}}" width="128" height="128">
-                        @endif
+                    <div class="form-group">
+                        <label for="picture_select">Képek:</label>
+                        <div class="row">
+                        @foreach ($item->pictures as $pic)
+                        <div class="col">
+                            <img src="{{asset($pic->file_path)}}" width="128" >
+                        </div>
+                        @endforeach
+                        </div>
                     </div>
                     <br>
                 </div>

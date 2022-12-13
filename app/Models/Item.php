@@ -15,7 +15,10 @@ class Item extends Model
         'serialnumber',
         'minimumlevel',
         'price',
-        'type_id'
+        'type_id',
+        'company_id',
+        'location',
+        'description',
         ];
 
     protected $appends = ['quantity_value'];
@@ -72,6 +75,16 @@ class Item extends Model
     public function type()
     {
         return $this->belongsTo(Type::class, 'type_id');
+    }
+
+    /**
+     * Get the company that owns the Item
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
     public function getLatestQuantity()

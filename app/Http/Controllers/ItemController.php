@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Picture;
 use App\Models\Type;
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Customfield;
 use App\Models\Quantity;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::with('pictures', 'quantity')->get();
+        $items = Item::with('pictures', 'quantity', 'company')->get();
         $trashed = Item::onlyTrashed()->get();
 
         $totalquantity = 0;
@@ -56,7 +57,9 @@ class ItemController extends Controller
     {
         $types = Type::all();
         $pictures = Picture::all();
-        return view('items.create', compact('pictures', 'types'));
+        $companies = Company::all();
+
+        return view('items.create', compact('pictures', 'types', 'companies'));
     }
 
     /**
@@ -75,6 +78,7 @@ class ItemController extends Controller
             'minimumlevel' => $request->minimumlevel,
             'price' => $request->price,
             'picture_id' => $request->picture_select,
+            'company_id' => $request->company_select,
         ]);
 
         $item->save();
@@ -129,10 +133,10 @@ class ItemController extends Controller
         $unckeckedtypes = Customfield::whereNotIn('id', $checked)->get();
 
         $types = Type::all();
-
         $pictures = Picture::all();
+        $companies = Company::all();
 
-        return view('items.edit', compact('item', 'pictures', 'unckeckedtypes', 'types'));
+        return view('items.edit', compact('item', 'pictures', 'unckeckedtypes', 'types', 'companies'));
     }
 
     /**
@@ -166,7 +170,7 @@ class ItemController extends Controller
             'serialnumber' => $request->serialnumber,
             'minimumlevel' => $request->minimumlevel,
             'price' => $request->price,
-            'picture_id' => $request->picture_select,
+            'company_id' => $request->company_select,
         ]);
 
         return redirect()->route('items.index');

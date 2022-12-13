@@ -43,7 +43,18 @@
                     </div>
                     <div class="form-group">
                         <label for="company">Gyártó</label>
-                        <input type="text" class="form-control" id="company" name="company" value="{{$item->company}}">
+                        <select class="select text-wrap form-control" style="border: 1px solid" id="company_select" name="company_select" class="form-control">
+                            <option value=""></option>
+                            @foreach ($companies as $company)
+                                <option value="{{$company->id}}"
+                                    @if ($company->id == $item->company_id)
+                                        selected
+                                    @endif
+                                    >
+                                    {{$company->name}}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         @livewire('auto-complete')
