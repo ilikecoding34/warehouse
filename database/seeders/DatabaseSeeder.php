@@ -3,9 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Item;
-use App\Models\Quantity;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,13 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-      //php artisan db:seed --class=DatabaseSeeder
-      User::factory(10)->create();
 
-      for($i = 0; $i < 50; $i++){
-        $item = Item::factory()->create();
-        $quantity = Quantity::factory()->create(['item_id' => $item->id]);
-      }
+      $this->call([
+        RolesAndPermissionsSeeder::class,
+        UserSeeder::class,
+        ItemSeeder::class,
+      ]);
 
     }
 }

@@ -17,8 +17,7 @@ First steps
 - php artisan key:generate
 - setup your database parameters in .env file
 - php artisan migrate
-- php artisan db:seed --class=DatabaseSeeder
-- php artisan db:seed --class=RolesAndPermissionsSeeder
+- php artisan db:seed
 - php artisan serve
 - open url: localhost:8000
 - admin login: email: admin@gmail.com, password: 123456
