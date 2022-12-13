@@ -6,15 +6,12 @@ use App\Http\Controllers\PictureController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomfieldController;
 use App\Http\Controllers\TypeController;
-use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CompanyController;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
-use App\Models\Item;
-use App\Models\User;
-use App\Models\Quantity;
 use Illuminate\Http\Request;
 
 /*
@@ -32,18 +29,13 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/webcam', function () {
-    return view('webcam');
-});
-
-Route::get('/qrcode', [QrCodeController::class, 'index']);
-
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('items', ItemController::class);
     Route::resource('pictures', PictureController::class);
     Route::resource('types', TypeController::class);
+    Route::resource('companies', CompanyController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('customfields', CustomfieldController::class);
     Route::resource('roles', RoleController::class);
@@ -74,6 +66,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/customfields/{id}/modal', [CustomfieldController::class, 'modal'])->name('customfields.modal');
 
     Route::get('/customfields/restore/{id}', [CustomfieldController::class, 'restore'])->name('customfields.restore');
+
+    Route::get('/companies/{id}/modal', [CompanyController::class, 'modal'])->name('companies.modal');
+
+    Route::get('/companies/restore/{id}', [CompanyController::class, 'restore'])->name('companies.restore');
 
 });
 

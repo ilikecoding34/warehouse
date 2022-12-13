@@ -38,6 +38,12 @@
                         </div>
                         <div class="card" style="width: 10rem; display: inline-block">
                             <div class="card-body">
+                                <p class="card-title text-center">Gyártók</p>
+                                <a class="stretched-link" href="{{route('companies.index')}}"></a>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 10rem; display: inline-block">
+                            <div class="card-body">
                                 <p class="card-title text-center">Egyedi mezők</p>
                                 <a class="stretched-link" href="{{route('customfields.index')}}"></a>
                             </div>
