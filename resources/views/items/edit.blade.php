@@ -42,8 +42,7 @@
                         <input type="text" class="form-control" id="location" name="location" value="{{$item->location}}">
                     </div>
                     <div class="form-group">
-                        @livewire('auto-complete', [
-                            'single' => true, 
+                        @livewire('single-select-autocomplete', [
                             'model' => '\App\Models\Company', 
                             'item_id' => $item->id, 
                             'inputname' => 'company_select',
@@ -51,8 +50,7 @@
                             ])
                     </div>
                     <div class="form-group">
-                        @livewire('auto-complete', [
-                            'single' => false, 
+                        @livewire('multiple-select-autocomplete', [
                             'model' => '\App\Models\Category', 
                             'item_id' => $item->id, 
                             'inputname' => 'category_select', 
@@ -75,7 +73,7 @@
                             <option value=""></option>
                             @foreach ($types as $type)
                                 <option value="{{$type->name}}"
-                                    @if ($type->id == $item->type_id)
+                                    @if ($type->name == $item->type)
                                         selected
                                     @endif
                                     >
