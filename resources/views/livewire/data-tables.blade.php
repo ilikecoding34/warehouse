@@ -86,11 +86,7 @@
                 <td>{{ $item->quantity_value }}</td>
                 <td>{{ $item->price }}</td>
                 <td>{{ $item->location }}</td>
-                <td>@if (isset($item->company))
-                  {{ $item->company->name }}
-                @else
-                <span class="fw-bold bg-warning">Törölt gyártó</span>
-                @endif</td>
+                <td>{{ $item->company }}</td>
                 <td>{{ $item->description }}</td>
                 <td><a class="btn" href="{{route('items.show', $item->id)}}">Megnyitás</a></td>
               </tr>

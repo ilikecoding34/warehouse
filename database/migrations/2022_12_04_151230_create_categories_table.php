@@ -23,7 +23,7 @@ return new class extends Migration
         Schema::create('item_category', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
-            $table->unsignedBigInteger('categories_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')
@@ -31,7 +31,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('categories_id')->references('id')->on('categories')
+            $table->foreign('category_id')->references('id')->on('categories')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

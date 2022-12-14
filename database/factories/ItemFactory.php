@@ -15,14 +15,18 @@ class ItemFactory extends Factory
      */
     public function definition()
     {
+        $list = [
+            'SMC','Eaton','Siemens','Carl Valentin','Weidmüller','BOS','Lipowsky','Omron','Keyence','Moxa','Festo', 'Pepperl+Fuchs', 'HBM'
+        ];
+
         return [
             'uniquename' => $this->faker->unique()->word(),
             'serialnumber' => $this->faker->unique()->numberBetween(10,20000),
             'minimumlevel' => $this->faker->numberBetween(10,50),
             'price' => $this->faker->numberBetween(1,200),
-            'company_id' => $this->faker->numberBetween(1,12),
+            'company' => $this->faker->randomElement($list),
             'location' => $this->faker->word(),
-            'type_id' => Type::factory(),
+            'type' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'created_at' => now(),
             'updated_at' => now(),

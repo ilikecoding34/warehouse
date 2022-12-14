@@ -15,8 +15,8 @@ class Item extends Model
         'serialnumber',
         'minimumlevel',
         'price',
-        'type_id',
-        'company_id',
+        'type',
+        'company',
         'location',
         'description',
         ];
@@ -54,7 +54,7 @@ class Item extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'item_category');
     }
 
     /**
@@ -65,16 +65,6 @@ class Item extends Model
     public function pictures()
     {
         return $this->belongsToMany(Picture::class);
-    }
-
-    /**
-     * Get the user that owns the Item
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function type()
-    {
-        return $this->belongsTo(Type::class, 'type_id');
     }
 
     /**
@@ -94,7 +84,7 @@ class Item extends Model
 
     public function getQuantityValueAttribute()
     {
-        return Quantity::where('item_id',$this->id)->latest()->first()->value ?? 0;
+        return Quantity::where('item_id', $this->id)->orderBy('id', 'desc')->first()->value ?? 0;
     }
 /*
     public function scopeWithQuantityValue($query)
