@@ -156,9 +156,13 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        foreach ($item->customfields as $value) {
+        foreach ($item->customfields as $key => $value) {
             static $i = 0;
             $item->customfields()->updateExistingPivot($value->pivot->customfield_id, ['value' => $request->customfieldsdatas[$i]]);
+            if($value->pivot->value != $request->customfieldsdatas[$i]){
+                DB::insert('insert into item_changes (item_id, user_name, changedcolumn, changeddata, created_at, updated_at) values (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)',
+                [$item->id, auth()->user()->name, $value->name, $request->customfieldsdatas[$i]]);
+            }
             $i++;
         }
 
