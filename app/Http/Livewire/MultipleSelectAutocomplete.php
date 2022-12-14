@@ -17,11 +17,13 @@ class MultipleSelectAutocomplete extends Component
 
     public function mount()
     {
-        $item = Item::find($this->item_id);
+        if(isset($this->item_id)){
+            $item = Item::find($this->item_id);
+            $categories = $item->categories()->get();
+            $this->multipleSelected = $categories->pluck('name')->toArray();
+            $this->multipleSelectedids = $categories->pluck('id')->toArray();
+        }
         $this->modeldata = $this->model::all();
-        $categories = $item->categories()->get();
-        $this->multipleSelected = $categories->pluck('name')->toArray();
-        $this->multipleSelectedids = $categories->pluck('id')->toArray();
     }
 
     public function multipleSelect($inputid, $inputdata)

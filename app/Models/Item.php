@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class Item extends Model
 {
@@ -19,6 +20,8 @@ class Item extends Model
         'company',
         'location',
         'description',
+        'created_by_user',
+        'updated_by_user',
         ];
 
     protected $appends = ['quantity_value'];
@@ -30,6 +33,16 @@ class Item extends Model
             $query->withQuantityValue();
         });
         */
+
+        static::updating(function ($item) {
+            $details = $item->getDirty();
+
+            foreach ($details as $key => $value) {
+                $value = $value ?? 0;
+                DB::insert('insert into item_changes (item_id, user_name, changedcolumn, changeddata, created_at, updated_at) values (?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)', [$item->id, auth()->user()->name, $key, $value]);
+            }
+        });
+
     }
 
     /**

@@ -23,6 +23,8 @@ class CreateItemsTable extends Migration
             $table->string('company');
             $table->float('price');
             $table->string('description');
+            $table->string('created_by_user');
+            $table->string('updated_by_user');
             $table->softDeletes();
             $table->timestamps();
         });

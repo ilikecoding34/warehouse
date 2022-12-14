@@ -8,9 +8,12 @@
                 <div class="card-header">
                     <div class="d-flex">
                         <div class="flex-grow-1">
-                            {{ __('Bejegyzés megtekintése') }}
+                            {{ __('Bejegyzés megtekintése') }}<br>
+                            Létrehozta: {{$item->created_by_user}}<br>
+                            Utoljára módosította: {{$item->updated_by_user}}
                         </div>
                         <div>
+                           
                             Updated at: {{$item->updated_at}}
                         </div>
                     </div>

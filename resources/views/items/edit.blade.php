@@ -82,7 +82,17 @@
                             @endforeach
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="type_select">Már feltöltött képek:</label>
+                        <select class="select text-wrap form-control" style="border: 1px solid" id="picture_select" name="picture_select[]" class="form-control" multiple>
+                            <option value=""></option>
+                            @foreach ($pictures as $picture)
+                                <option value={{$picture->id}}>
+                                    {{$picture->name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <br>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success">Frissítés</button>

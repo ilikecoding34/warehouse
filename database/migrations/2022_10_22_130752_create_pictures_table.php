@@ -21,6 +21,22 @@ class CreatePicturesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('item_picture', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('picture_id');
+
+            $table->foreign('item_id')->references('id')->on('items')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('picture_id')->references('id')->on('pictures')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -31,5 +47,6 @@ class CreatePicturesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pictures');
+        Schema::dropIfExists('item_pictures');
     }
 }

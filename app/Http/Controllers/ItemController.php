@@ -77,14 +77,21 @@ class ItemController extends Controller
             'serialnumber' => $request->serialnumber,
             'minimumlevel' => $request->minimumlevel,
             'price' => $request->price,
-            'picture_id' => $request->picture_select,
             'company' => $request->company_select,
             'type' => $request->type_select,
+            'created_by_user' => auth()->user()->name,
         ]);
 
         $item->save();
 
         $item->customfields()->sync($request->customfields);
+
+        if(isset($request->category_select)){
+            $item->categories()->sync(explode( ',', $request->category_select));
+        }
+        if(isset($request->picture_select)){
+            $item->pictures()->syncWithoutDetaching($request->picture_select);
+        }
 
         $quantity = new Quantity();
 
@@ -164,8 +171,12 @@ class ItemController extends Controller
 
             $quantity->save();
         }
-
-        $item->categories()->sync(explode( ',', $request->category_select));
+        if(isset($request->category_select)){
+            $item->categories()->sync(explode( ',', $request->category_select));
+        }
+        if(isset($request->picture_select)){
+            $item->pictures()->syncWithoutDetaching($request->picture_select);
+        }
 
         $item->update([
             'uniquename' => $request->uniquename,
@@ -174,6 +185,7 @@ class ItemController extends Controller
             'price' => $request->price,
             'company' => $request->company_select,
             'type' => $request->type_select,
+            'updated_by_user' => auth()->user()->name,
         ]);
 
         return redirect()->route('items.index');

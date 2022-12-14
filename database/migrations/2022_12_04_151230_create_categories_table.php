@@ -24,7 +24,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('category_id');
-            $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')
                 ->constrained()

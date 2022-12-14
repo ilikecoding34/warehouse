@@ -16,9 +16,11 @@ class SingleSelectAutocomplete extends Component
 
     public function mount()
     {
-        $item = Item::find($this->item_id);
+        if(isset($this->item_id)){
+            $item = Item::find($this->item_id);
+            $this->singleSelectedvalue = $item->company;
+        }
         $this->modeldata = $this->model::all();
-        $this->singleSelectedvalue = $item->company;
     }
     public function singleSelect($inputdata)
     {

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Type;
+use App\Models\User;
 use App\Models\Company;
 
 class ItemFactory extends Factory
@@ -28,6 +29,8 @@ class ItemFactory extends Factory
             'location' => $this->faker->word(),
             'type' => $this->faker->word(),
             'description' => $this->faker->sentence(),
+            'created_by_user' => $this->faker->name(),
+            'updated_by_user' => $this->faker->name(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

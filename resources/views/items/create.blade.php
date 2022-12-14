@@ -32,12 +32,25 @@
                             <input type="text" class="form-control" id="price" name="price">
                         </div>
                         <div class="form-group">
-                            <label for="company">Gyártó</label>
-                            <select class="select text-wrap form-control" style="border: 1px solid" id="company_select" name="company_select" class="form-control">
+                            @livewire('single-select-autocomplete', [
+                                'model' => '\App\Models\Company', 
+                                'inputname' => 'company_select',
+                                'title' => 'Gyártó'
+                                ])
+                        </div>
+                        <div class="form-group">
+                            @livewire('multiple-select-autocomplete', [
+                                'model' => '\App\Models\Category', 
+                                'inputname' => 'category_select', 
+                                'title' => 'Kategória'])
+                        </div>
+                        <div class="form-group">
+                            <label for="picture_select">Kép kiválasztás:</label>
+                            <select class="form-control" style="border: 1px solid" id="picture_select" name="picture_select">
                                 <option value=""></option>
-                                @foreach ($companies as $company)
-                                    <option value="{{$company->name}}">
-                                        {{$company->name}}
+                                @foreach ($pictures as $item)
+                                    <option value="{{$item->id}}">
+                                        {{$item->name}}
                                     </option>
                                 @endforeach
                             </select>
@@ -53,19 +66,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        @livewire('auto-complete')
-                        <div class="form-group">
-                            <label for="picture_select">Kép kiválasztás:</label>
-                            <select class="form-control" style="border: 1px solid" id="picture_select" name="picture_select">
-                                <option value=""></option>
-                                @foreach ($pictures as $item)
-                                    <option value="{{$item->id}}">
-                                        {{$item->name}}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <br><br><br><br><br><br><br><br><br><br><br><br>
+                        <br>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Mentés</button>
                         </div>
