@@ -42,23 +42,23 @@
                         <input type="text" class="form-control" id="location" name="location" value="{{$item->location}}">
                     </div>
                     <div class="form-group">
-                        <label for="company">Gyártó</label>
-                        <select class="select text-wrap form-control" style="border: 1px solid" id="company_select" name="company_select" class="form-control">
-                            <option value=""></option>
-                            @foreach ($companies as $company)
-                                <option value="{{$company->id}}"
-                                    @if ($company->id == $item->company_id)
-                                        selected
-                                    @endif
-                                    >
-                                    {{$company->name}}
-                                </option>
-                            @endforeach
-                        </select>
+                        @livewire('auto-complete', [
+                            'single' => true, 
+                            'model' => '\App\Models\Company', 
+                            'item_id' => $item->id, 
+                            'inputname' => 'company_select',
+                            'title' => 'Gyártó'
+                            ])
                     </div>
                     <div class="form-group">
-                        @livewire('auto-complete')
+                        @livewire('auto-complete', [
+                            'single' => false, 
+                            'model' => '\App\Models\Category', 
+                            'item_id' => $item->id, 
+                            'inputname' => 'category_select', 
+                            'title' => 'Kategória'])
                     </div>
+                    
                     @foreach ($item->customfields as $customfield)
                         <div class="form-group
                         @if (in_array($customfield->id, Session::get('success') ?? []))
@@ -74,7 +74,7 @@
                         <select class="select text-wrap form-control" style="border: 1px solid" id="type_select" name="type_select" class="form-control">
                             <option value=""></option>
                             @foreach ($types as $type)
-                                <option value="{{$type->id}}"
+                                <option value="{{$type->name}}"
                                     @if ($type->id == $item->type_id)
                                         selected
                                     @endif

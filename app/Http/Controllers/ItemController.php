@@ -78,7 +78,8 @@ class ItemController extends Controller
             'minimumlevel' => $request->minimumlevel,
             'price' => $request->price,
             'picture_id' => $request->picture_select,
-            'company_id' => $request->company_select,
+            'company' => $request->company_select,
+            'type' => $request->type_select,
         ]);
 
         $item->save();
@@ -148,7 +149,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-
         foreach ($item->customfields as $value) {
             static $i = 0;
             $item->customfields()->updateExistingPivot($value->pivot->customfield_id, ['value' => $request->customfieldsdatas[$i]]);
@@ -165,12 +165,15 @@ class ItemController extends Controller
             $quantity->save();
         }
 
+        $item->categories()->sync(explode( ',', $request->category_select));
+
         $item->update([
             'uniquename' => $request->uniquename,
             'serialnumber' => $request->serialnumber,
             'minimumlevel' => $request->minimumlevel,
             'price' => $request->price,
-            'company_id' => $request->company_select,
+            'company' => $request->company_select,
+            'type' => $request->type_select,
         ]);
 
         return redirect()->route('items.index');

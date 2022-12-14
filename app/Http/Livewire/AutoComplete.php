@@ -3,38 +3,62 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Item;
 use App\Models\Category;
 use Str;
 
 class AutoComplete extends Component
 {
-
-    public $categories;
-    public $listvisible = false;
-    public $multiplelistvisible = false;
-    public $categoryname, $categorysearchname = '';
-
-    public $categorymultiplename = [];
-    public $categoryarray = [];
-    public $categoryselected = [];
-    public $categorysingleselected = '';
+    public $modeldata;
+    public $item_id;
+    public $single, $model, $inputname, $title;
+    public $listvisible,$multiplelistvisible = false;
+    public $singleSearchInput, $multipleSearchInput,$singleSelectedvalue = '';
+    public $multipleSelected = [], $multipleSelectedids = [], $categoryarray = [], $filterarray = [];
 
     public function mount()
     {
-        $this->categories = Category::all();
+        $item = Item::find($this->item_id);
+        $this->modeldata = $this->model::all();
+        $this->singleSelectedvalue = $item->company;
+        $categories = $item->categories()->get();
+        $this->multipleSelected = $categories->pluck('name')->toArray();
+        $this->multipleSelectedids = $categories->pluck('id')->toArray();
     }
-    public function categoryselected($categoryname)
+    public function singleSelect($inputdata)
     {
-        $this->categorysingleselected = $categoryname;
+        $this->singleSelectedvalue = $inputdata;
     }
 
-    public function categoryMultiSelect($categoryname)
+    public function multipleSelect($inputid, $inputdata)
     {
-        array_push($this->categorymultiplename, $categoryname);
-        $this->categoryselected = [];
-        foreach ($this->categorymultiplename as $key => $value) {
-            array_push($this->categoryselected, ['name', '<>', $value]);
+        $indexOfSelected = $this->modeldata->pluck('name')->search($inputdata);
+        $this->modeldata->splice($indexOfSelected, 1);
+        if(!in_array($inputid, $this->multipleSelectedids)){
+            array_push($this->multipleSelected, $inputdata);
+            array_push($this->multipleSelectedids, $inputid);
+            $this->filterarray = [];
+            foreach ($this->multipleSelected as $key => $value) {
+                array_push($this->filterarray, ['name', '<>', $value]);
+            }
         }
+    }
+
+    public function removeFromList($indexnumber)
+    {
+        unset($this->multipleSelected[$indexnumber]);
+        unset($this->multipleSelectedids[$indexnumber]);
+        unset($this->filterarray[$indexnumber]);
+        $this->multipleSelected = array_values($this->multipleSelected);
+        $this->multipleSelectedids = array_values($this->multipleSelectedids);
+        $this->filterarray = array_values($this->filterarray);
+    }
+
+    public function clearAllSelected()
+    {
+        $this->multipleSelected = [];
+        $this->multipleSelectedids = [];
+        $this->filterarray = [];
     }
 
     public function showhidelist()
@@ -46,23 +70,26 @@ class AutoComplete extends Component
     public function searchInTable($single)
     {
         if($single){
-            if(Str::length($this->categoryname) > 2 && count($this->categories) > 1){
+            if(Str::length($this->singleSearchInput) > 2){
+                $this->modeldata = $this->model::where('name', 'like', $this->singleSearchInput.'%')->get();
+            }
+            
+            if(count($this->modeldata) > 0){
                 $this->listvisible = true;
-                $this->categories = Category::where('name', 'like', $this->categoryname.'%')->get();
             }else{
                 $this->listvisible = false;
             }
         }else{
-            if(Str::length($this->categorysearchname) > 2 && count($this->categories) > 0){
-
-                $this->multiplelistvisible = true;
-    
-                if(count($this->categoryselected)>0){
-                    dd(Category::where('name', 'like', $this->categorysearchname.'%')->where($this->categoryselected)->toSql());
-                    $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->where($this->categoryselected)->get();
+            if(Str::length($this->multipleSearchInput) > 2){
+                if(count($this->filterarray)>0){
+                    $this->modeldata = $this->model::where('name', 'like', $this->multipleSearchInput.'%')->where($this->filterarray)->get();
                 }else{
-                    $this->categories = Category::where('name', 'like', $this->categorysearchname.'%')->get();
+                    $this->modeldata = $this->model::where('name', 'like', $this->multipleSearchInput.'%')->get();
                 }
+            }
+            
+            if(count($this->modeldata) > 0){
+                $this->multiplelistvisible = true;
             }else{
                 $this->multiplelistvisible = false;
             }

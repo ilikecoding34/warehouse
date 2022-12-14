@@ -66,14 +66,28 @@
                     <div class="form-group">
                         <label for="company">Gyártó</label>
                         @if (isset($item->company))
-                            <input type="text" class="form-control" id="company" disabled name="company" value="{{$item->company->name}}">
+                            <input type="text" class="form-control" id="company" disabled name="company" value="{{$item->company}}">
                         @else
                             <span class="fw-bold bg-warning">Törölt gyártó</span>
                         @endif
                     </div>
                     <div class="form-group">
+                        <label for="category">Kategória</label>
+                        @if (isset($item->categories))
+                            <div class="row">
+                                @foreach ($item->categories as $category)
+                                <div class="col">
+                                    <input type="text" class="form-control" id="category" disabled name="category" value="{{$category->name}}">    
+                                </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <span class="fw-bold bg-warning">Törölt kategória</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="type">Típus</label>
-                        <input type="text" class="form-control" id="type" disabled name="type" value="{{$item->type->name ?? 'Nincs kiválasztva'}}">
+                        <input type="text" class="form-control" id="type" disabled name="type" value="{{$item->type ?? 'Nincs kiválasztva'}}">
                     </div>
                     <br>
                     @if(count($item->customfields)>0)
