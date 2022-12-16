@@ -2,7 +2,7 @@
   <div class="card m-2">
       <div class="card-body">
         {!! $items->links() !!}
-        <table class="table">
+        <table class="table table-hover">
           Result: {{$resultcount}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
           <thead>
             <tr>
