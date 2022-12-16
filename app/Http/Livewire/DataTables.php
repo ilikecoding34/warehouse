@@ -3,22 +3,31 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
+use Illuminate\Pagination\Paginator;
 use App\Models\Item;
 use App\Models\Quantity;
 use DB;
 
 class DataTables extends Component
 {
-    public $items;
+    use WithPagination;
+
+    protected $trackComponentPath = '';
+    protected $paginationTheme = 'bootstrap';
+    protected $queryString = ['serialnumber', 'uname', 'price', 'location', 'company', 'description'];
+    protected $items;
+
     public $sortedfield = 'id';
-    public $serialnumber, $uname, $price, $location, $company, $description = '';
-    public $totalquantity, $totalvalue, $relation = 0;
+    public $serialnumber, $uname, $price, $location, $company, $description;
+    public $totalquantity, $totalvalue, $relation, $resultcount = 0;
     public $direction = 'asc';
     public $quantity_value = '';
+    public $currentPage = 1;
 
     public function mount()
     {
-        $this->items = Item::with('pictures', 'quantity', 'company')->get();
+        $this->searchInTable();
     }
 
     public function sortBy($field)
@@ -48,6 +57,7 @@ class DataTables extends Component
 
     public function searchInTable()
     {
+        $items;
         $columns = [
             'serialnumber' => $this->serialnumber,
             'uniquename' => $this->uname,
@@ -92,27 +102,32 @@ class DataTables extends Component
                     break;
             }
 
-            $this->items = Item::whereIn('id', function($query) use($par, $rel){
+            $items = Item::whereIn('id', function($query) use($par, $rel){
                 $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
                     $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
                 })->where('value', $rel, $par);
-            })->where($allfilter)->orderBy($this->sortedfield, $this->direction)->with('pictures', 'quantity', 'company')->get();
+            })->where($allfilter)->orderBy($this->sortedfield, $this->direction);
 
         }else{
             if(count($allfilter)>0){
-                $this->items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction)->with('pictures', 'quantity', 'company')->get();
+                $items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction);
             }else{
-                $this->items = Item::orderBy($this->sortedfield, $this->direction)->with('pictures', 'quantity', 'company')->get();
+                $items = Item::orderBy($this->sortedfield, $this->direction);
             }
         }
+        return $items;
     }
 
     public function render()
     {
-
         $this->totalquantity = 0;
         $this->totalvalue = 0;
 
+        $this->items = $this->searchInTable();
+        $this->resultcount = $this->items->count();
+        $this->items = $this->items->paginate(50);
+        $this->resetPage();
+        
         foreach ($this->items as $item) {
             $this->totalquantity += $item->quantity_value;
             $this->totalvalue += $item->price*$item->quantity_value;

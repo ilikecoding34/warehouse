@@ -1,8 +1,9 @@
 <div>
   <div class="card m-2">
       <div class="card-body">
-        Result: {{count($items)}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
+        {!! $items->links() !!}
         <table class="table">
+          Result: {{$resultcount}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
           <thead>
             <tr>
               <th scope="col">
