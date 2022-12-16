@@ -56,7 +56,8 @@
                         </td>
                     </tr>
                     @endforeach
-
+                    {{ $items->links() }}
+                    </table>
                 </div>
                 @if ($trashed->count() > 0)
                 <br>

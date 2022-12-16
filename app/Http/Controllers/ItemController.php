@@ -34,8 +34,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::with('pictures', 'quantity', 'company')->get();
-        $trashed = Item::onlyTrashed()->get();
+        $items = Item::paginate(50);
+        $trashed = Item::onlyTrashed()->paginate(50);
 
         $totalquantity = 0;
         $totalvalue = 0;
