@@ -9,6 +9,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ChangeController;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
@@ -70,6 +71,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/companies/{id}/modal', [CompanyController::class, 'modal'])->name('companies.modal');
 
     Route::get('/companies/restore/{id}', [CompanyController::class, 'restore'])->name('companies.restore');
+
+    Route::get('/logs', [ChangeController::class, 'index'])->name('changeditem');
+    Route::get('/logs/{id}', [ChangeController::class, 'show'])->name('changeslist');
 
 });
 
