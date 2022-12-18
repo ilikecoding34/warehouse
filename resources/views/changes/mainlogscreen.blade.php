@@ -2,11 +2,17 @@
 
 @section('content')
 
-<example-component></example-component>
+
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
+            <div class="card my-2">
+                <div class="card-header">{{ __('Vuejs tábla') }}</div>
+                <div class="card-body">
+                <example-component :items={{$logs}}></example-component>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header">{{ __('Válatozások') }}</div>
                 <div class="card-body">

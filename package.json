@@ -27,6 +27,8 @@
     },
     "dependencies": {
         "chart.js": "^3.9.1",
-        "chartjs-plugin-annotation": "^2.0.1"
+        "chartjs-plugin-annotation": "^2.0.1",
+        "mock-data": "^1.5.5",
+        "vue2-datatable-component": "^2.3.1"
     }
 }

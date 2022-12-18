@@ -1,23 +1,27 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+      <code>query: {{ query }}</code>
+      <datatable v-bind="$data" />
     </div>
-</template>
+  </template>
+  <script>
 
-<script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
-</script>
+  export default {
+    props: {items: Array},
+    mounted() {
+        this.data = this.items;
+    },
+    data: () => ({
+      columns: [
+        { title: 'User name', field: 'user_name', sortable: true },
+        { title: 'Oszlop', field: 'changedcolumn', sortable: true },
+        { title: 'Adat', field: 'changeddata', sortable: false },
+        { title: 'Változott', field: 'created_at', sortable: false },
+      ],
+      data: [],
+      total: 0,
+      query: {},
+    }),
+
+  }
+  </script>
