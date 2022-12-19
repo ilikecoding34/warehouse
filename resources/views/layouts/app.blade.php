@@ -85,8 +85,8 @@
 
         <div id='app'>
             @yield('content')
+            <flash class="alert-flash" message="{{Session::get('flash')}}"></flash>
         </div>
-
     </div>
     @livewireScripts
 </body>

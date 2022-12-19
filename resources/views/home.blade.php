@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-@section('content')
 <style>
 .mainbtn {
   box-shadow: inset 0 0 0 0 #6D6E71;
@@ -38,6 +36,9 @@ a:hover::before {
 }
 
 </style>
+@section('content')
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12">
@@ -49,32 +50,32 @@ a:hover::before {
                     <h5 class="card-title">Bejelentkezés szükséges</h5>
                     @else
                     <div class="card-body">
-                    <a class="card mainbtn" href="{{route('items.index')}}" style="width: 10rem; display: inline-block">
+                    <a class="card mainbtn btn" href="{{route('items.index')}}" style="width: 10rem; display: inline-block">
                         <div class="card-body">
                             <p class="card-title text-center">Tételek</p>
                         </div>
                     </a>
-                    <a class="card mainbtn" style="width: 10rem; display: inline-block" href="{{route('pictures.index')}}">
+                    <a class="card mainbtn btn" style="width: 10rem; display: inline-block" href="{{route('pictures.index')}}">
                         <div class="card-body">
                             <p class="card-title text-center">Képek</p>
                         </div>
                     </a>
-                    <a class="card mainbtn" style="width: 10rem; display: inline-block" href="{{route('types.index')}}">
+                    <a class="card mainbtn btn" style="width: 10rem; display: inline-block" href="{{route('types.index')}}">
                         <div class="card-body">
                             <p class="card-title text-center">Típusok</p>
                         </div>
                     </a>
-                    <a class="card mainbtn" style="width: 10rem; display: inline-block" href="{{route('categories.index')}}">
+                    <a class="card mainbtn btn" style="width: 10rem; display: inline-block" href="{{route('categories.index')}}">
                         <div class="card-body">
                             <p class="card-title text-center">Kategóriák</p>
                         </div>
                     </a>
-                    <a class="card mainbtn" style="width: 10rem; display: inline-block" href="{{route('companies.index')}}">
+                    <a class="card mainbtn btn" style="width: 10rem; display: inline-block" href="{{route('companies.index')}}">
                         <div class="card-body">
                             <p class="card-title text-center">Gyártók</p>
                         </div>
                     </a>
-                    <a class="card mainbtn" style="width: 10rem; display: inline-block" href="{{route('customfields.index')}}">
+                    <a class="card mainbtn btn" style="width: 10rem; display: inline-block" href="{{route('customfields.index')}}">
                         <div class="card-body">
                             <p class="card-title text-center">Egyedi mezők</p>
                         </div>

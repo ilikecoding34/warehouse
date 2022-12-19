@@ -228,7 +228,7 @@ class ItemController extends Controller
         }
 
         $item->customfields()->sync($request->customfields);
-        return redirect()->route('items.edit', $item->id)->with('success', $changed);
+        return redirect()->route('items.edit', $item->id)->with(['success' => $changed, 'flash' => 'Frissítve']);
     }
 
     public function modal($id)
