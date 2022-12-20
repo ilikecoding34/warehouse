@@ -13,17 +13,15 @@ class DataTables extends Component
 {
     use WithPagination;
 
-    protected $trackComponentPath = '';
     protected $paginationTheme = 'bootstrap';
     protected $queryString = ['serialnumber', 'uname', 'price', 'location', 'company', 'description'];
     protected $items;
 
     public $sortedfield = 'id';
     public $serialnumber, $uname, $price, $location, $company, $description;
-    public $totalquantity, $totalvalue, $relation, $resultcount = 0;
-    public $direction = 'asc';
+    public $totalquantity = 0, $totalvalue = 0, $relation = 0;
+    public $fieldDirection = 'asc';
     public $quantity_value = '';
-    public $currentPage = 1;
 
     public function mount()
     {
@@ -32,16 +30,17 @@ class DataTables extends Component
 
     public function sortBy($field)
     {
-        $this->sortedfield == $field ? $this->direction = $this->direction == 'asc' ? 'desc' : 'asc' : $this->direction = 'desc';
+        $this->sortedfield == $field ? $this->fieldDirection = $this->fieldDirection == 'asc' ? 'desc' : 'asc' : $this->fieldDirection = 'desc';
         $this->sortedfield = $field;
+        $this->resetPage();
         $this->searchInTable();
     }
 
     public function orderBy($field)
     {
-        $this->sortedfield == $field ? $this->direction = $this->direction == 'asc' ? 'desc' : 'asc' : $this->direction = 'desc';
+        $this->sortedfield == $field ? $this->fieldDirection = $this->fieldDirection == 'asc' ? 'desc' : 'asc' : $this->fieldDirection = 'desc';
         $this->sortedfield = $field;
-        $this->items = $this->direction == 'asc' ? $this->items->sortByDesc($field) : $this->items->sortBy($field);
+        $this->items = $this->fieldDirection == 'asc' ? $this->items->sortByDesc($field) : $this->items->sortBy($field);
     }
 
     public function addWhereClosure($columns)
@@ -53,6 +52,12 @@ class DataTables extends Component
             }
         }
         return $allfilter;
+    }
+
+    public function filterChanged()
+    {
+        $this->resetPage();
+        $this->searchInTable();
     }
 
     public function searchInTable()
@@ -106,13 +111,13 @@ class DataTables extends Component
                 $query->select('item_id')->from('quantities')->whereIn('id', function($query) use($par){
                     $query->select(DB::raw('MAX(id) as id'))->from('quantities')->groupBy('item_id');
                 })->where('value', $rel, $par);
-            })->where($allfilter)->orderBy($this->sortedfield, $this->direction);
+            })->where($allfilter)->orderBy($this->sortedfield, $this->fieldDirection)->with('getLatestQuantity');
 
         }else{
             if(count($allfilter)>0){
-                $items = Item::where($allfilter)->orderBy($this->sortedfield, $this->direction);
+                $items = Item::where($allfilter)->orderBy($this->sortedfield, $this->fieldDirection)->with('getLatestQuantity');
             }else{
-                $items = Item::orderBy($this->sortedfield, $this->direction);
+                $items = Item::orderBy($this->sortedfield, $this->fieldDirection)->with('getLatestQuantity');
             }
         }
         return $items;
@@ -120,19 +125,6 @@ class DataTables extends Component
 
     public function render()
     {
-        $this->totalquantity = 0;
-        $this->totalvalue = 0;
-
-        $this->items = $this->searchInTable();
-        $this->resultcount = $this->items->count();
-        $this->items = $this->items->paginate(50);
-        $this->resetPage();
-        
-        foreach ($this->items as $item) {
-            $this->totalquantity += $item->quantity_value;
-            $this->totalvalue += $item->price*$item->quantity_value;
-        }
-
-        return view('livewire.data-tables', ['items' => $this->items])->layout('layouts.app');
+        return view('livewire.data-tables', ['items' => $this->searchInTable()->paginate(50)])->layout('layouts.app');
     }
 }

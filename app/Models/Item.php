@@ -94,11 +94,12 @@ class Item extends Model
     {
         return $this->hasOne(Quantity::class)->latestOfMany();
     }
-
+/*
     public function getQuantityValueAttribute()
     {
         return Quantity::where('item_id', $this->id)->orderBy('id', 'desc')->first()->value ?? 0;
     }
+    */
 /*
     public function scopeWithQuantityValue($query)
     {

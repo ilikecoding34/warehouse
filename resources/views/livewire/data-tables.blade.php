@@ -1,23 +1,52 @@
 <div>
   <div class="card m-2">
       <div class="card-body">
-        {!! $items->links() !!}
         <table class="table table-hover">
-          Result: {{$resultcount}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
+          Result: {{$items->total()}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
           <thead>
             <tr>
               <th scope="col">
-                <span role="button" wire:click="sortBy('id')">#</span>
+                <span role="button" wire:click="sortBy('id')" :direction="$sortedfield == 'id' ? $fieldDirection : null"># 
+                  @if($sortedfield == 'id')
+                  @if ($fieldDirection == 'asc')
+                  <i class="fa-solid fa-arrow-down-short-wide"></i>
+                  @else
+                  <i class="fa-solid fa-arrow-down-wide-short"></i>
+                  @endif
+                  @else
+                    <i class="fa-solid fa-sort"></i>
+                  @endif
+                </span>
               </th>
               <th scope="col">
-                <span role="button" wire:click="sortBy('serialnumber')">Sorozatszám</span>
+                <span role="button" wire:click="sortBy('serialnumber')" :direction="$sortedfield == 'serialnumber' ? $fieldDirection : null">Sorozatszám 
+                  @if($sortedfield == 'serialnumber')
+                    @if ($fieldDirection == 'asc')
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    @else
+                    <i class="fa-solid fa-arrow-down-z-a"></i>  
+                    @endif
+                  @else
+                    <i class="fa-solid fa-sort"></i>
+                  @endif
+                </span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('uniquename')">Megnevezés</span>
+                <span wire:click="sortBy('uniquename')" :direction="$sortedfield == 'uniquename' ? $fieldDirection : null">Megnevezés 
+                  @if($sortedfield == 'uniquename')
+                    @if ($fieldDirection == 'asc')
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    @else
+                    <i class="fa-solid fa-arrow-down-z-a"></i>  
+                    @endif
+                  @else
+                    <i class="fa-solid fa-sort"></i>
+                  @endif
+                </span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="orderBy('quantity_value')">Darabszám</span>
-                <select name="relation" id="relation" wire:model="relation" wire:change="searchInTable">
+                <span wire:click="orderBy('quantity_value')">Darabszám <i class="fa-solid fa-sort"></i></span>
+                <select name="relation" id="relation" wire:model="relation" wire:change="filterChanged">
                     <option value="0">*</option>
                     <option value="1">></option>
                     <option value="2"><</option>
@@ -25,16 +54,16 @@
                 </select>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('price')">Ár(€)</span>
+                <span wire:click="sortBy('price')">Ár(€) <i class="fa-solid fa-sort"></i></span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('type')">Hely</span>
+                <span wire:click="sortBy('type')">Hely <i class="fa-solid fa-sort"></i></span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('company')">Gyártó</span>
+                <span wire:click="sortBy('company')">Gyártó <i class="fa-solid fa-sort"></i></span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="sortBy('description')">Leírás</span>
+                <span wire:click="sortBy('description')">Leírás <i class="fa-solid fa-sort"></i></span>
               </th>
               <th scope="col">Művelet</th>
               </tr>
@@ -42,37 +71,37 @@
                 <th></th>
                 <th>
                   <div class="col-xs-3">
-                  <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="serialnumber">
+                  <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="serialnumber">
                   </div>
                 </th>
                 <th>
                   <div class="col-xs-3">
-                  <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="uname">
+                  <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="uname">
                   </div>
                   </th>
                   <th>
                     <div class="col-xs-2">
-                      <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="quantity_value">
+                      <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="quantity_value">
                     </div>
                 </th>
                 <th>
                   <div class="col-xs-2">
-                    <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="price">
+                    <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="price">
                   </div>
               </th>
               <th>
                 <div class="col-xs-2">
-                  <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="location">
+                  <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="location">
                 </div>
             </th>
             <th>
               <div class="col-xs-2">
-                <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="company">
+                <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="company">
               </div>
           </th>
           <th>
             <div class="col-xs-2">
-              <input class="form-control" wire:keyup="searchInTable" type="text" wire:model="description">
+              <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="description">
             </div>
         </th>
                 <th></th>
@@ -84,7 +113,7 @@
                 <th scope="row">{{$item->id}}</th>
                 <td>{{ $item->serialnumber }}</td>
                 <td>{{ $item->uniquename }}</td>
-                <td>{{ $item->quantity_value }}</td>
+                <td>{{ $item->getLatestQuantity->value }}</td>
                 <td>{{ $item->price }}</td>
                 <td>{{ $item->location }}</td>
                 <td>{{ $item->company }}</td>
@@ -93,13 +122,16 @@
               </tr>
             @endforeach
           </tbody>
+          <div class="d-flex justify-content-center" wire:loading.class="alert alert-warning">
+            <div wire:loading>
+                <strong>Betöltés</strong>
+            </div>
+          </div>
+          {{ $items->links() }}
         </table>
+        
       </div>
   </div>
-  <div class="d-flex justify-content-center" wire:loading.class="alert alert-warning">
-    <div wire:loading>
-        <strong>Betöltés</strong>
-    </div>
-  </div>
+  
 </div>
 
