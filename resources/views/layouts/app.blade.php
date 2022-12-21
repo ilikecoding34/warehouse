@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('/js/app.js') }}" defer></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -86,9 +86,9 @@
 
         <div id='app'>
             @yield('content')
-            <flash class="alert-flash" message="{{Session::get('flash')}}"></flash>
+            {{-- <flash class="alert-flash" message="{{Session::get('flash')}}"></flash> --}}
         </div>
     </div>
-    @livewireScripts
+    {{-- @livewireScripts --}}
 </body>
 </html>

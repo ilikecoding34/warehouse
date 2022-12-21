@@ -116,12 +116,10 @@ class ItemController extends Controller
         $dates = [];
         if(count($item->quantity)>0){
             array_push($unitsdiff, 0);
-            for ($i=1; $i < count($item->quantity); $i++) {
-                array_push($unitsdiff, $item->quantity[$i]->value - $item->quantity[$i-1]->value);
-            }
-            foreach ($item->quantity as $quantity) {
-                array_push($units, $quantity->value);
-                array_push($dates, '"'.$quantity->created_at->format('Y-m-d').'"');
+            for ($i=20; $i > 0; $i--) {
+                array_push($unitsdiff, $item->quantity[$i-1]->value - $item->quantity[$i]->value);
+                array_push($units, $item->quantity[$i]->value);
+                array_push($dates, '"'.$item->quantity[$i]->created_at->format('Y-m-d').'"');
             }
         }
 

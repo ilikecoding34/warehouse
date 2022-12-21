@@ -24,7 +24,7 @@ class Item extends Model
         'updated_by_user',
         ];
 
-    protected $appends = ['quantity_value'];
+    //protected $appends = ['quantity_value'];
 
     protected static function booted()
     {
@@ -57,7 +57,7 @@ class Item extends Model
 
     public function quantity()
     {
-        return $this->hasMany(Quantity::class);
+        return $this->hasMany(Quantity::class)->latest();
     }
 
     /**
