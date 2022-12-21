@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="quantity">Mennyiség</label>
-                        <input type="text" class="form-control" id="quantity" name="quantity" value="{{$item->quantity_value}}">
+                        <input type="text" class="form-control" id="quantity" name="quantity" value="{{$item->quantity}}">
                     </div>
                     <div class="form-group">
                         <label for="minimumlevel">Minumum mennyiség:</label>

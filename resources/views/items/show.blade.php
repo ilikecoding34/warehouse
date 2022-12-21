@@ -35,12 +35,12 @@
                                         <div class="col">
                                             <label for="quantity">Kezdő mennyiség</label>
                                             <input type="text" class="form-control" id="quantity" disabled name="quantity"
-                                            value="@if (count($item->quantity) > 0){{$item->quantity->first()->value}}@endif">
+                                            value="@if (count($item->quantities) > 0){{$item->quantities->first()->value}}@endif">
                                         </div>
                                         <div class="col">
                                             <label for="quantity">Jelenlegi mennyiség</label>
                                             <input type="text" class="form-control" id="quantity" disabled name="quantity"
-                                            value="@if (count($item->quantity) > 0){{$item->quantity->last()->value}}@endif">
+                                            value="{{$item->quantity}}">
                                         </div>
                                         <div class="col">
                                             <label for="minimumlevel">Minimum mennyiség:</label>
@@ -119,13 +119,13 @@
                 </div>
                 <div class="m-2">
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Változások összesen: {{count($item->quantity)}}
+                    Változások összesen: {{count($item->quantities)}}
                 </button>
 
                 <div class="collapse" id="collapseExample">
                     <div>
-                        @if (count($item->quantity)>0)
-                        @foreach ($item->quantity as $quantity)
+                        @if (count($item->quantities)>0)
+                        @foreach ($item->quantities as $quantity)
                             Jelenlegi mennyiség: {{$quantity->value}} - {{$quantity->user->name}} - {{$quantity->created_at}}
                             <br>
                         @endforeach

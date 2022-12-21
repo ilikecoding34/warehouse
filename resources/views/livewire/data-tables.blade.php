@@ -50,7 +50,7 @@
                 </span>
               </th>
               <th scope="col" role="button">
-                <span wire:click="orderBy('quantity_value')">Darabszám <i class="fa-solid fa-sort"></i></span>
+                <span wire:click="sortBy('quantity')">Darabszám <i class="fa-solid fa-sort"></i></span>
                 <select name="relation" id="relation" wire:model="relation" wire:change="filterChanged">
                     <option value="0">*</option>
                     <option value="1">></option>
@@ -86,7 +86,7 @@
                   </th>
                   <th>
                     <div class="col-xs-2">
-                      <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="quantity_value">
+                      <input class="form-control" wire:keyup="filterChanged" type="text" wire:model="quantity">
                     </div>
                 </th>
                 <th>
@@ -118,7 +118,7 @@
                 <th scope="row">{{$item->id}}</th>
                 <td>{{ $item->serialnumber }}</td>
                 <td>{{ $item->uniquename }}</td>
-                <td>{{ $item->getLatestQuantity->value }}</td>
+                <td>{{ $item->quantity }}</td>
                 <td>{{ $item->price }}</td>
                 <td>{{ $item->location }}</td>
                 <td>{{ $item->company }}</td>

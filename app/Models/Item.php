@@ -17,6 +17,7 @@ class Item extends Model
         'minimumlevel',
         'price',
         'type',
+        'quantity',
         'company',
         'location',
         'description',
@@ -55,7 +56,7 @@ class Item extends Model
         return $this->belongsToMany(Customfield::class)->withPivot('id', 'value')->withTimeStamps();
     }
 
-    public function quantity()
+    public function quantities()
     {
         return $this->hasMany(Quantity::class)->latest();
     }
@@ -78,16 +79,6 @@ class Item extends Model
     public function pictures()
     {
         return $this->belongsToMany(Picture::class);
-    }
-
-    /**
-     * Get the company that owns the Item
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function company()
-    {
-        return $this->belongsTo(Company::class, 'company_id');
     }
 
     public function getLatestQuantity()

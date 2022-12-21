@@ -77,6 +77,7 @@ class ItemController extends Controller
             'serialnumber' => $request->serialnumber,
             'minimumlevel' => $request->minimumlevel,
             'price' => $request->price,
+            'quantity' => $request->quantity,
             'company' => $request->company_select,
             'type' => $request->type_select,
             'created_by_user' => auth()->user()->name,
@@ -114,12 +115,12 @@ class ItemController extends Controller
         $units = [];
         $unitsdiff = [];
         $dates = [];
-        if(count($item->quantity)>0){
+        if(count($item->quantities)>0){
             array_push($unitsdiff, 0);
-            for ($i=20; $i > 0; $i--) {
-                array_push($unitsdiff, $item->quantity[$i-1]->value - $item->quantity[$i]->value);
-                array_push($units, $item->quantity[$i]->value);
-                array_push($dates, '"'.$item->quantity[$i]->created_at->format('Y-m-d').'"');
+            for ($i=count($item->quantities)-1; $i > 0; $i--) {
+                array_push($unitsdiff, $item->quantities[$i-1]->value - $item->quantities[$i]->value);
+                array_push($units, $item->quantities[$i]->value);
+                array_push($dates, '"'.$item->quantities[$i]->created_at->format('Y-m-d').'"');
             }
         }
 
@@ -164,7 +165,7 @@ class ItemController extends Controller
             $i++;
         }
 
-        if($item->getLatestQuantity == null || $request->quantity != $item->quantity_value){
+        if($item->getLatestQuantity == null || $request->quantity != $item->quantity){
             $quantity = new Quantity();
 
             $quantity->item_id = $item->id;
@@ -184,6 +185,7 @@ class ItemController extends Controller
             'uniquename' => $request->uniquename,
             'serialnumber' => $request->serialnumber,
             'minimumlevel' => $request->minimumlevel,
+            'quantity' => $request->quantity,
             'price' => $request->price,
             'company' => $request->company_select,
             'type' => $request->type_select,

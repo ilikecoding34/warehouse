@@ -27,7 +27,7 @@
                     type="text"
                     name="name"
                     id="name"
-                    value="{{ $type->name }}">
+                    value="{{ $customfield->name }}">
 
                     @error('name')
                         <p class="help is-danger">{{ $errors->first('name')}}</p>

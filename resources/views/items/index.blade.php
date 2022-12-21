@@ -38,7 +38,7 @@
                         </td>
                         <td>
                             <div>
-                                {{$item->quantity_value}}
+                                {{$item->quantity}}
                             </div>
                         </td>
                         <td>
