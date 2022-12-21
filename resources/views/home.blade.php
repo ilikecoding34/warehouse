@@ -35,6 +35,20 @@ a:hover::before {
   transform: scaleX(1);
 }
 
+.loadingmessage{
+    display: block;
+    top: 10%;
+    text-align: center;
+    text-justify: center;
+    opacity: 0.8;
+    border: solid 2px #0080FF80;
+    width: 97%;
+    height: 10rem;
+    position: absolute;
+    z-index: 1000;
+    border-radius: 30px;
+}
+
 </style>
 @section('content')
 

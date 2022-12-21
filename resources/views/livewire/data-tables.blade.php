@@ -1,6 +1,11 @@
 <div>
   <div class="card m-2">
       <div class="card-body">
+        <div wire:loading>
+          <div wire:loading.class="loadingmessage text-center d-flex justify-content-center align-items-center bg-light">
+            <div style="backdrop-filter: blur(10px);"><h1>Betöltés</h1></div>
+          </div>
+        </div>
         <table class="table table-hover">
           Result: {{$items->total()}}, Total quantity: {{$totalquantity}}, Total value: {{$totalvalue}} €
           <thead>
@@ -122,11 +127,7 @@
               </tr>
             @endforeach
           </tbody>
-          <div class="d-flex justify-content-center" wire:loading.class="alert alert-warning">
-            <div wire:loading>
-                <strong>Betöltés</strong>
-            </div>
-          </div>
+          
           {{ $items->links() }}
         </table>
         

@@ -6,7 +6,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Pagination\Paginator;
 use App\Models\Item;
-use App\Models\Quantity;
 use DB;
 
 class DataTables extends Component
@@ -60,9 +59,23 @@ class DataTables extends Component
         $this->searchInTable();
     }
 
+    public function calculateSumValues($inputCollection)
+    {
+        $items = $inputCollection->get();
+        $sumvalue = 0;
+        $sumquantity = 0;
+        
+        foreach ($items as $key => $value) {
+            $sumquantity += $value->getLatestQuantity->value;
+            $sumvalue += $value->getLatestQuantity->value * $value->price;
+        }
+        $this->totalquantity = $sumquantity;
+        $this->totalvalue = $sumvalue;
+
+    }
+
     public function searchInTable()
     {
-        $items;
         $columns = [
             'serialnumber' => $this->serialnumber,
             'uniquename' => $this->uname,
@@ -120,6 +133,7 @@ class DataTables extends Component
                 $items = Item::orderBy($this->sortedfield, $this->fieldDirection)->with('getLatestQuantity');
             }
         }
+        $this->calculateSumValues($items);
         return $items;
     }
 
